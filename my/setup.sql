@@ -1,4 +1,4 @@
--- assuming the hron schema has already been created (see user.sql)
+-- assuming the hron schema has already been created (see once.sql)
 -- source this script on MySQL (as hron)
 
 use hron;
@@ -15,6 +15,8 @@ drop table if exists location;
 drop table if exists country;
 drop table if exists region;
 drop table if exists job;
+
+drop procedure if exists get_employee_car;
 
 -- simple: "one" region, many countries
 create table region(
@@ -563,6 +565,22 @@ insert into car (name, employee_id) values
  ('Tortoise', @mng_ac);
 commit;
 
+DELIMITER //
+
+CREATE PROCEDURE get_employee_car(
+	in p_employee_id integer,
+    out p_car_name varchar(40)
+)
+begin
+	select name
+	into p_car_name
+	from car
+	where employee_id = p_employee_id;
+end;
+
+//
+DELIMITER ;
+
 -- "many" services taking cares of many cars, many services could share the same location
 create table service(
 	service_id integer primary key auto_increment,
@@ -584,8 +602,8 @@ insert into service (name, location_id) values
 create table car_service(
 	car_id integer,
 	service_id integer,
-	checkin timestamp,
-	checkout timestamp,
+	checkin datetime,
+	checkout datetime,
 
 	check (checkin < checkout),
 	primary key (car_id, service_id, checkin),
