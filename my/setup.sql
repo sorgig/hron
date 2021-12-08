@@ -103,8 +103,8 @@ select country_id into @nl from country where name = 'Netherlands';
 select country_id into @mx from country where name = 'Mexico';
 
 insert into location (street_address, postal_code, city, state_province, country_id) values
-	('Via Cola di Rienzo, 1297', '00989', 'Roma', "RM", @it),
-    ('Calle della Testa, 93091', '10934', 'Venice', "VE", @it),
+	('Via Cola di Rienzo, 1297', '00989', 'Roma', 'RM', @it),
+    ('Calle della Testa, 93091', '10934', 'Venice', 'VE', @it),
     ('2017 Shinjuku-ku', '1689', 'Tokyo', 'Tokyo Prefecture', @jp),
     ('9450 Kamiya-cho', '6823', 'Hiroshima', null, @jp),
     ('2014 Jabberwocky Rd', '26192', 'Southlake', 'Texas', @us),
@@ -366,52 +366,61 @@ alter table employee add foreign key (manager_id) references employee (employee_
 
 -- FK from department table
 select department_id into @ac from department where name = 'Accounting';
+update employee set department_id = @ac where job_id in (@acmg, @puac);
+
 select department_id into @ad from department where name = 'Administration';
+update employee set department_id = @ad where job_id = @asst;
+
 select department_id into @ex from department where name = 'Executive';
+update employee set department_id = @ex where job_id in (@pres, @vprs);
+
 select department_id into @fi from department where name = 'Finance';
+update employee set department_id = @fi where job_id in (@fimg, @acct);
+
 select department_id into @hr from department where name = 'Human Resources';
+update employee set department_id = @hr where job_id = @hrrp;
+
 select department_id into @it from department where name = 'IT';
+update employee set department_id = @it where job_id = @prog;
+
 select department_id into @mk from department where name = 'Marketing';
+update employee set department_id = @mk where job_id in (@mkmg, @mkrp);
+
 select department_id into @pr from department where name = 'Public Relations';
+update employee set department_id = @pr where job_id = @prrp;
+
 select department_id into @pu from department where name = 'Purchasing';
+update employee set department_id = @pu where job_id in (@pumg, @puck);
+
 select department_id into @sa from department where name = 'Sales';
+update employee set department_id = @sa where job_id in (@samg, @sarp) and first_name != 'Kimberely';
+
 select department_id into @sh from department where name = 'Shipping';
+update employee set department_id = @sh where job_id in (@shck, @stck, @stmg);
 
 -- manager id
+select employee_id into @mng_fi from employee where first_name = 'Nancy' and last_name = 'Greenberg';
+select employee_id into @mng_ac from employee where first_name = 'Shelley' and last_name = 'Higgins';
 select employee_id into @mng_ad from employee where first_name = 'Jennifer' and last_name = 'Whalen';
 select employee_id into @mng_mk from employee where first_name = 'Michael' and last_name = 'Hartstein';
 select employee_id into @mng_pu from employee where first_name = 'Den' and last_name = 'Raphaely';
+select employee_id into @mng_sa from employee where first_name = 'John' and last_name = 'Russell';
+select employee_id into @mng_ex from employee where first_name = 'Steven' and last_name = 'King';
 select employee_id into @mng_hr from employee where first_name = 'Susan' and last_name = 'Mavris';
 select employee_id into @mng_sh from employee where first_name = 'Adam' and last_name = 'Fripp';
 select employee_id into @vp_it  from employee where first_name = 'Lex' and last_name = 'De Haan';
 select employee_id into @vp     from employee where first_name = 'Neena' and last_name = 'Kochhar';
-select employee_id into @mng_it from employee where first_name = 'Alexander' and last_name = 'Hunold';
 select employee_id into @mng_pr from employee where first_name = 'Hermann' and last_name = 'Baer';
-select employee_id into @mng_sa from employee where first_name = 'John' and last_name = 'Russell';
-select employee_id into @mng_ex from employee where first_name = 'Steven' and last_name = 'King';
-select employee_id into @mng_fi from employee where first_name = 'Nancy' and last_name = 'Greenberg';
-select employee_id into @mng_ac from employee where first_name = 'Shelley' and last_name = 'Higgins';
+select employee_id into @mng_it from employee where first_name = 'Alexander' and last_name = 'Hunold';
 
-update employee set department_id = @ac where job_id in (@acmg, @puac);
-update employee set department_id = @ad where job_id = @asst;
-update employee set department_id = @ex where job_id in (@pres, @vprs);
-update employee set department_id = @fi where job_id in (@fimg, @acct);
-update employee set department_id = @hr where job_id = @hrrp;
-update employee set department_id = @it where job_id = @prog;
-update employee set department_id = @mk where job_id in (@mkmg, @mkrp);
-update employee set department_id = @pr where job_id = @prrp;
-update employee set department_id = @pu where job_id in (@pumg, @puck);
-update employee set department_id = @sa where job_id in (@samg, @sarp) and first_name != 'Kimberely';
-update employee set department_id = @sh where job_id in (@shck, @stck, @stmg);
-
-update employee set manager_id = @mng_ex where job_id in (@vprs, @pumg, @stmg, @samg, @mkmg);
-update employee set manager_id = @mng_it where job_id = @prog and last_name != 'Hunold';
 update employee set manager_id = @vp_it where employee_id = @mng_it;
 update employee set manager_id = @vp where employee_id in (@mng_fi, @mng_ac, @mng_ad, @mng_hr, @mng_pr);
+update employee set manager_id = @mng_it where job_id = @prog and employee_id != @mng_it;
+update employee set manager_id = @mng_ex where job_id in (@vprs, @pumg, @stmg, @samg, @mkmg);
 update employee set manager_id = @mng_fi where job_id = @acct;
-update employee set manager_id = @mng_pu where job_id = @puck;
-update employee set manager_id = @mng_mk where job_id = @mkrp;
 update employee set manager_id = @mng_ac where job_id = @puac;
+update employee set manager_id = @mng_mk where job_id = @mkrp;
+update employee set manager_id = @mng_pu where job_id = @puck;
 
 -- weiss team
 select employee_id into @weiss from employee where first_name = 'Matthew' and last_name = 'Weiss';
