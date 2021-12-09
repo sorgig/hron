@@ -590,7 +590,7 @@ end;
 //
 DELIMITER ;
 
--- "many" services taking cares of many cars, many services could share the same location
+-- "many" services taking cares of many cars, many services could share one location
 create table service(
 	service_id integer primary key auto_increment,
 	name varchar(40),
@@ -603,9 +603,9 @@ select location_id into @loc1 from location where city = 'Roma';
 select location_id into @loc2 from location where city = 'Singapore';
 
 insert into service (name, location_id) values
-	("Inspired Glass", @loc1),
-	("Faith Auto Repair", @loc1),
-	("Happy Brake", @loc2);
+	('Inspired Glass', @loc1),
+	('Faith Auto Repair', @loc1),
+	('Happy Brake', @loc2);
 
 -- many to many with details
 create table car_service(
