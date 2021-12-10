@@ -1,5 +1,5 @@
 -- examples on comparison operators
-use hron;
+alter session set current_schema = hron;
 
 -- equality
 select *
@@ -47,12 +47,7 @@ select name
 from region
 where name like '%m%';
 
--- "like" a string having a lowercase "m" anywhere
-select name
-from region
-where name like binary '%m%';
-
--- starting with "a"
+-- starting with "A"
 select first_name, last_name
 from employee
 where last_name like 'A%';
@@ -70,11 +65,11 @@ where last_name like '___';
 -- implicit cast to string before checking the pattern
 select last_name, first_name, hired
 from employee
-where hired like '2015%';
+where hired like '%-21';
 
 select last_name, first_name, hired
 from employee
-where hired like '%-05-%';
+where hired like '%-MAY-%';
 
 -- interval check with "between ... and ..."
 select *
@@ -84,17 +79,17 @@ where region_id between 1 and 3;
 -- "between" strings
 select *
 from country
-where name between 'belgium' and 'china';
+where name between 'Belgium' and 'China';
 
 -- ...
 select *
 from country
-where name between 'i' and 'j';
+where name between 'I' and 'J';
 
 -- "between" dates
 select last_name, first_name, hired
 from employee
-where hired between '2015-01-01' and '2015-12-31';
+where hired between date'2015-01-01' and date'2015-12-31';
 
 -- check if "in" a set
 select *
@@ -120,7 +115,7 @@ where commission not in (.30, null);
 -- "is (not) null" is the only way to check it
 select *
 from employee
-where commission is not null;
+where commission is not null and commission != .30;
 
 -- this one works fine
 select *
