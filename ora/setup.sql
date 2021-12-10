@@ -31,7 +31,6 @@ insert into region (name) values ('Europe');
 insert into region (name) values ('Americas');
 insert into region (name) values ('Asia');
 insert into region (name) values ('Middle East and Africa');
-
 commit;
 
 -- a "many" table with a natural PK, to one region
@@ -40,7 +39,7 @@ create table country (
 	name varchar2(40),
 	region_id integer,
 
-    foreign key (region_id) references region (region_id)
+    constraint country_region_fk foreign key (region_id) references region (region_id)
 );
 
 declare
@@ -92,7 +91,7 @@ create table location (
 	state_province varchar2(25),
 	country_id char(2),
 
-    foreign key (country_id) references country (country_id)
+    constraint location_country_fk foreign key (country_id) references country (country_id)
 );
 
 declare
@@ -183,7 +182,7 @@ create table job (
     min_salary decimal(6,0),
     max_salary decimal(6,0),
 
-    check (min_salary < max_salary)
+    constraint job_salary_ck check (min_salary < max_salary)
 );
 
 insert into job (title, min_salary, max_salary) values ('President', 20080, 40000);
@@ -214,7 +213,7 @@ create table department(
 	manager_id integer unique,
 	location_id integer,
 
-    foreign key (location_id) references location (location_id)
+    constraint department_location_fk foreign key (location_id) references location (location_id)
 );
 
 declare
@@ -273,9 +272,9 @@ create table employee(
 	manager_id integer,
 	department_id integer,
 
-	check (salary > 0),
-    foreign key (job_id) references job (job_id),
-    foreign key (department_id) references department (department_id)
+	constraint employee_salary_ck check (salary > 0),
+    constraint employee_job_fk foreign key (job_id) references job (job_id),
+    constraint employee_department_fk foreign key (department_id) references department (department_id)
 );
 
 declare
@@ -540,9 +539,8 @@ begin
 end;
 /
 
--- this FK has an explicit name so it is simpler and safer to remove
 alter table department add constraint department_manager_fk foreign key (manager_id) references employee (employee_id);
-alter table employee add foreign key (manager_id) references employee (employee_id);
+alter table employee add constraint employee_manager_fk foreign key (manager_id) references employee (employee_id);
 
 -- set the department FK
 create or replace procedure set_department_fk_by_job(
@@ -754,13 +752,12 @@ end;
 /
 
 -- "one" car for one employee, "many" cars seviced by many services
-
 create table car(
 	car_id integer primary key,
 	name varchar2(40) unique,
 	employee_id integer unique,
 
-    foreign key (employee_id) references employee (employee_id)
+    constraint car_employee_fk foreign key (employee_id) references employee (employee_id)
 );
 
 create sequence car_seq;
@@ -817,7 +814,7 @@ create table service(
 	name varchar2(40),
 	location_id integer,
 
-	foreign key (location_id) references location (location_id)
+	constraint service_location_fk foreign key (location_id) references location (location_id)
 );
 
 insert into service (name, location_id) values ('Inspired Glass', 1000);
@@ -832,7 +829,7 @@ create table car_service(
 	checkin timestamp,
 	checkout timestamp,
 
-	check (checkin < checkout),
+	constraint car_service_time_ck check (checkin < checkout),
 	primary key (car_id, service_id, checkin),
 	constraint car_service_car_fk foreign key (car_id) references car (car_id),
 	constraint car_service_service_fk foreign key (service_id) references service (service_id)
