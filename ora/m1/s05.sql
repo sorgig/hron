@@ -31,6 +31,11 @@ select employee_id, first_name, last_name, salary * nvl(commission, 0) as "Month
 from employee
 where last_name = 'King';
 
--- compare nvl() to coalesce()
-select nvl(null, 42), coalesce(null, null, 42)
+-- using nvl2()
+select first_name, last_name, nvl2(commission, 'value', 'no value') as commission
+from employee
+where last_name = 'King';
+
+-- coalesce()
+select coalesce(null, null, 42, null)
 from dual;
