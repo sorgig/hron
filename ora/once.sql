@@ -2,6 +2,7 @@
 
 -- uncomment next line to enable resetting of user and schema
 -- drop user hron cascade;
+-- drop user hron2;
 
 create user hron identified by password account unlock;
 grant connect, resource to hron;
@@ -11,6 +12,11 @@ grant debug connect session to hron;
 grant debug any procedure to hron;
 
 alter user hron quota unlimited on users;
+
+create user hron2 identified by password account unlock;
+grant connect, resource to hron2;
+grant select, insert, update, delete on hron.service to hron2;
+
 
 connect hron/password@localhost:1521/xepdb1
 
