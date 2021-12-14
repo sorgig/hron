@@ -246,6 +246,16 @@ begin
     insert into department (name, location_id) values ('Executive', v_sewa);
     insert into department (name, location_id) values ('Finance', v_sewa);
     insert into department (name, location_id) values ('Accounting', v_sewa);
+
+    -- other departements, not used
+    insert into department (name) values ('Treasury');
+    insert into department (name) values ('Benefits');
+    insert into department (name) values ('Manufacturing');
+    insert into department (name) values ('Contracting');
+    insert into department (name) values ('Operations');
+    insert into department (name) values ('IT Support');
+    insert into department (name) values ('IT Helpdesk');
+    insert into department (name) values ('Recruiting');
     commit;
 end $$;
 
