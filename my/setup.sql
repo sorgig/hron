@@ -17,6 +17,7 @@ drop table if exists region;
 drop table if exists job;
 
 drop procedure if exists get_employee_car;
+drop procedure if exists get_employee_salary;
 
 -- simple: "one" region, many countries
 create table region(
@@ -584,6 +585,17 @@ begin
 	select name
 	into p_car_name
 	from car
+	where employee_id = p_employee_id;
+end;
+
+CREATE PROCEDURE get_employee_salary(
+	in p_employee_id integer,
+    out p_salary decimal(8, 2)
+)
+begin
+	select salary
+	into p_salary
+	from employee
 	where employee_id = p_employee_id;
 end;
 
