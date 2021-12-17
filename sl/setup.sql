@@ -1,87 +1,61 @@
-drop table if exists job_history;
--- drop_fk_if_exists('departments', 'departments_manager_fk');
-drop table if exists employees;
-drop table if exists departments;
-drop table if exists locations;
-drop table if exists countries;
-drop table if exists regions;
-drop table if exists jobs;
+drop table if exists car_service;
+drop table if exists service;
+drop table if exists car;
+drop table if exists employee;
+drop table if exists department;
+drop table if exists job;
+drop table if exists location;
+drop table if exists country;
+drop table if exists region;
 
-create table regions(
+-- simple: "one" region, many countries
+create table region (
     region_id integer primary key,
-    region_name varchar(25)
+    name varchar(25)
 );
 
-insert into regions (region_name) values ('Europe');
-insert into regions (region_name) values ('Americas');
-insert into regions (region_name) values ('Asia');
-insert into regions (region_name) values ('Middle East and Africa');
+insert into region (name) values ('Europe');
+insert into region (name) values ('Americas');
+insert into region (name) values ('Asia');
+insert into region (name) values ('Middle East and Africa');
 
---
-create table countries(
+-- a "many" table with a natural PK, to one region
+create table country(
     country_id char(2) primary key,
-    country_name varchar(40),
+    name varchar(40),
     region_id integer,
 
-    constraint countries_region_fk foreign key(region_id) references regions(region_id)
+    constraint country_region_fk foreign key (region_id) references region (region_id)
 );
 
-insert into countries (country_id,country_name,region_id) values ('AR','Argentina','2');
-insert into countries (country_id,country_name,region_id) values ('AU','Australia','3');
-insert into countries (country_id,country_name,region_id) values ('BE','Belgium','1');
-insert into countries (country_id,country_name,region_id) values ('BR','Brazil','2');
-insert into countries (country_id,country_name,region_id) values ('CA','Canada','2');
-insert into countries (country_id,country_name,region_id) values ('CH','Switzerland','1');
-insert into countries (country_id,country_name,region_id) values ('CN','China','3');
-insert into countries (country_id,country_name,region_id) values ('DE','Germany','1');
-insert into countries (country_id,country_name,region_id) values ('DK','Denmark','1');
-insert into countries (country_id,country_name,region_id) values ('EG','Egypt','4');
-insert into countries (country_id,country_name,region_id) values ('FR','France','1');
-insert into countries (country_id,country_name,region_id) values ('IL','Israel','4');
-insert into countries (country_id,country_name,region_id) values ('IN','India','3');
-insert into countries (country_id,country_name,region_id) values ('IT','Italy','1');
-insert into countries (country_id,country_name,region_id) values ('JP','Japan','3');
-insert into countries (country_id,country_name,region_id) values ('KW','Kuwait','4');
-insert into countries (country_id,country_name,region_id) values ('ML','Malaysia','3');
-insert into countries (country_id,country_name,region_id) values ('MX','Mexico','2');
-insert into countries (country_id,country_name,region_id) values ('NG','Nigeria','4');
-insert into countries (country_id,country_name,region_id) values ('NL','Netherlands','1');
-insert into countries (country_id,country_name,region_id) values ('SG','Singapore','3');
-insert into countries (country_id,country_name,region_id) values ('UK','United Kingdom','1');
-insert into countries (country_id,country_name,region_id) values ('US','United States of America','2');
-insert into countries (country_id,country_name,region_id) values ('ZM','Zambia','4');
-insert into countries (country_id,country_name,region_id) values ('ZW','Zimbabwe','4');
+insert into country (country_id, name, region_id) values ('AR', 'Argentina', 2);
+insert into country (country_id, name, region_id) values ('AU', 'Australia', 3);
+insert into country (country_id, name, region_id) values ('BE', 'Belgium', 1);
+insert into country (country_id, name, region_id) values ('BR', 'Brazil', 2);
+insert into country (country_id, name, region_id) values ('CA', 'Canada', 2);
+insert into country (country_id, name, region_id) values ('CH', 'Switzerland', 1);
+insert into country (country_id, name, region_id) values ('CN', 'China', 3);
+insert into country (country_id, name, region_id) values ('DE', 'Germany', 1);
+insert into country (country_id, name, region_id) values ('DK', 'Denmark', 1);
+insert into country (country_id, name, region_id) values ('EG', 'Egypt', 4);
+insert into country (country_id, name, region_id) values ('FR', 'France', 1);
+insert into country (country_id, name, region_id) values ('IL', 'Israel', 4);
+insert into country (country_id, name, region_id) values ('IN', 'India', 3);
+insert into country (country_id, name, region_id) values ('IT', 'Italy', 1);
+insert into country (country_id, name, region_id) values ('JP', 'Japan', 3);
+insert into country (country_id, name, region_id) values ('KW', 'Kuwait', 4);
+insert into country (country_id, name, region_id) values ('ML', 'Malaysia', 3);
+insert into country (country_id, name, region_id) values ('MX', 'Mexico', 2);
+insert into country (country_id, name, region_id) values ('NG', 'Nigeria', 4);
+insert into country (country_id, name, region_id) values ('NL', 'Netherlands', 1);
+insert into country (country_id, name, region_id) values ('SG', 'Singapore', 3);
+insert into country (country_id, name, region_id) values ('UK', 'United Kingdom', 1);
+insert into country (country_id, name, region_id) values ('US', 'United States of America', 2);
+insert into country (country_id, name, region_id) values ('ZM', 'Zambia', 4);
+insert into country (country_id, name, region_id) values ('ZW', 'Zimbabwe', 4);
 
---
-create table jobs(
-    job_id varchar(10) primary key,
-    job_title varchar(35) not null,
-    min_salary decimal(6,0),
-    max_salary decimal(6,0)
-);
-
-insert into jobs (job_id,job_title,min_salary,max_salary) values ('AD_PRES','President','20080','40000');
-insert into jobs (job_id,job_title,min_salary,max_salary) values ('AD_VP','Administration Vice President','15000','30000');
-insert into jobs (job_id,job_title,min_salary,max_salary) values ('AD_ASST','Administration Assistant','3000','6000');
-insert into jobs (job_id,job_title,min_salary,max_salary) values ('FI_MGR','Finance Manager','8200','16000');
-insert into jobs (job_id,job_title,min_salary,max_salary) values ('FI_ACCOUNT','Accountant','4200','9000');
-insert into jobs (job_id,job_title,min_salary,max_salary) values ('AC_MGR','Accounting Manager','8200','16000');
-insert into jobs (job_id,job_title,min_salary,max_salary) values ('AC_ACCOUNT','Public Accountant','4200','9000');
-insert into jobs (job_id,job_title,min_salary,max_salary) values ('SA_MAN','Sales Manager','10000','20080');
-insert into jobs (job_id,job_title,min_salary,max_salary) values ('SA_REP','Sales Representative','6000','12008');
-insert into jobs (job_id,job_title,min_salary,max_salary) values ('PU_MAN','Purchasing Manager','8000','15000');
-insert into jobs (job_id,job_title,min_salary,max_salary) values ('PU_CLERK','Purchasing Clerk','2500','5500');
-insert into jobs (job_id,job_title,min_salary,max_salary) values ('ST_MAN','Stock Manager','5500','8500');
-insert into jobs (job_id,job_title,min_salary,max_salary) values ('ST_CLERK','Stock Clerk','2008','5000');
-insert into jobs (job_id,job_title,min_salary,max_salary) values ('SH_CLERK','Shipping Clerk','2500','5500');
-insert into jobs (job_id,job_title,min_salary,max_salary) values ('IT_PROG','Programmer','4000','10000');
-insert into jobs (job_id,job_title,min_salary,max_salary) values ('MK_MAN','Marketing Manager','9000','15000');
-insert into jobs (job_id,job_title,min_salary,max_salary) values ('MK_REP','Marketing Representative','4000','9000');
-insert into jobs (job_id,job_title,min_salary,max_salary) values ('HR_REP','Human Resources Representative','4000','9000');
-insert into jobs (job_id,job_title,min_salary,max_salary) values ('PR_REP','Public Relations Representative','4500','10500');
-
---
-create table locations(
+-- "many" location in one country
+create table location(
     location_id integer primary key,
     street_address varchar(40),
     postal_code varchar(12),
@@ -89,292 +63,742 @@ create table locations(
     state_province varchar(25),
     country_id char(2),
 
-    constraint locations_country_fk foreign key(country_id) references countries(country_id)
+    constraint location_country_fk foreign key (country_id) references country (country_id)
 );
 
-insert into locations (location_id,street_address,postal_code,city,state_province,country_id) values ('1000','1297 Via Cola di Rienzo','00989','Roma',null,'IT');
-insert into locations (location_id,street_address,postal_code,city,state_province,country_id) values ('1100','93091 Calle della Testa','10934','Venice',null,'IT');
-insert into locations (location_id,street_address,postal_code,city,state_province,country_id) values ('1200','2017 Shinjuku-ku','1689','Tokyo','Tokyo Prefecture','JP');
-insert into locations (location_id,street_address,postal_code,city,state_province,country_id) values ('1300','9450 Kamiya-cho','6823','Hiroshima',null,'JP');
-insert into locations (location_id,street_address,postal_code,city,state_province,country_id) values ('1400','2014 Jabberwocky Rd','26192','Southlake','Texas','US');
-insert into locations (location_id,street_address,postal_code,city,state_province,country_id) values ('1500','2011 Interiors Blvd','99236','South San Francisco','California','US');
-insert into locations (location_id,street_address,postal_code,city,state_province,country_id) values ('1600','2007 Zagora St','50090','South Brunswick','New Jersey','US');
-insert into locations (location_id,street_address,postal_code,city,state_province,country_id) values ('1700','2004 Charade Rd','98199','Seattle','Washington','US');
-insert into locations (location_id,street_address,postal_code,city,state_province,country_id) values ('1800','147 Spadina Ave','M5V 2L7','Toronto','Ontario','CA');
-insert into locations (location_id,street_address,postal_code,city,state_province,country_id) values ('1900','6092 Boxwood St','YSW 9T2','Whitehorse','Yukon','CA');
-insert into locations (location_id,street_address,postal_code,city,state_province,country_id) values ('2000','40-5-12 Laogianggen','190518','Beijing',null,'CN');
-insert into locations (location_id,street_address,postal_code,city,state_province,country_id) values ('2100','1298 Vileparle (E)','490231','Bombay','Maharashtra','IN');
-insert into locations (location_id,street_address,postal_code,city,state_province,country_id) values ('2200','12-98 Victoria Street','2901','Sydney','New South Wales','AU');
-insert into locations (location_id,street_address,postal_code,city,state_province,country_id) values ('2300','198 Clementi North','540198','Singapore',null,'SG');
-insert into locations (location_id,street_address,postal_code,city,state_province,country_id) values ('2400','8204 Arthur St',null,'London',null,'UK');
-insert into locations (location_id,street_address,postal_code,city,state_province,country_id) values ('2500','Magdalen Centre, The Oxford Science Park','OX9 9ZB','Oxford','Oxford','UK');
-insert into locations (location_id,street_address,postal_code,city,state_province,country_id) values ('2600','9702 Chester Road','09629850293','Stretford','Manchester','UK');
-insert into locations (location_id,street_address,postal_code,city,state_province,country_id) values ('2700','Schwanthalerstr. 7031','80925','Munich','Bavaria','DE');
-insert into locations (location_id,street_address,postal_code,city,state_province,country_id) values ('2800','Rua Frei Caneca 1360 ','01307-002','Sao Paulo','Sao Paulo','BR');
-insert into locations (location_id,street_address,postal_code,city,state_province,country_id) values ('2900','20 Rue des Corps-Saints','1730','Geneva','Geneve','CH');
-insert into locations (location_id,street_address,postal_code,city,state_province,country_id) values ('3000','Murtenstrasse 921','3095','Bern','BE','CH');
-insert into locations (location_id,street_address,postal_code,city,state_province,country_id) values ('3100','Pieter Breughelstraat 837','3029SK','Utrecht','Utrecht','NL');
-insert into locations (location_id,street_address,postal_code,city,state_province,country_id) values ('3200','Mariano Escobedo 9991','11932','Mexico City','Distrito Federal,','MX');
+insert into location (street_address, postal_code, city, state_province, country_id) values
+    ('Via Cola di Rienzo, 1297', '00989', 'Roma', 'RM', 'IT');
+insert into location (street_address, postal_code, city, state_province, country_id) values
+    ('Calle della Testa, 93091', '10934', 'Venice', 'VE', 'IT');
+insert into location (street_address, postal_code, city, state_province, country_id) values
+    ('2017 Shinjuku-ku', '1689', 'Tokyo', 'Tokyo Prefecture', 'JP');
+insert into location (street_address, postal_code, city, state_province, country_id) values
+    ('9450 Kamiya-cho', '6823', 'Hiroshima', null, 'JP');
+insert into location (street_address, postal_code, city, state_province, country_id) values
+    ('2014 Jabberwocky Rd', '26192', 'Southlake', 'Texas', 'US');
+insert into location (street_address, postal_code, city, state_province, country_id) values
+    ('2011 Interiors Blvd', '99236', 'South San Francisco', 'California', 'US');
+insert into location (street_address, postal_code, city, state_province, country_id) values
+    ('2007 Zagora St', '50090', 'South Brunswick', 'New Jersey', 'US');
+insert into location (street_address, postal_code, city, state_province, country_id) values
+    ('2004 Charade Rd', '98199', 'Seattle', 'Washington', 'US');
+insert into location (street_address, postal_code, city, state_province, country_id) values
+    ('147 Spadina Ave', 'M5V 2L7', 'Toronto', 'Ontario', 'CA');
+insert into location (street_address, postal_code, city, state_province, country_id) values
+    ('6092 Boxwood St', 'YSW 9T2', 'Whitehorse', 'Yukon', 'CA');
+insert into location (street_address, postal_code, city, state_province, country_id) values
+    ('40-5-12 Laogianggen', '190518', 'Beijing', null, 'CN');
+insert into location (street_address, postal_code, city, state_province, country_id) values
+    ('1298 Vileparle (E)', '490231', 'Bombay', 'Maharashtra', 'IN');
+insert into location (street_address, postal_code, city, state_province, country_id) values
+    ('12-98 Victoria Street', '2901', 'Sydney', 'New South Wales', 'AU');
+insert into location (street_address, postal_code, city, state_province, country_id) values
+    ('198 Clementi North', '540198', 'Singapore', null, 'SG');
+insert into location (street_address, postal_code, city, state_province, country_id) values
+    ('8204 Arthur St', null, 'London', null, 'UK');
+insert into location (street_address, postal_code, city, state_province, country_id) values
+    ('Magdalen Centre, The Oxford Science Park', 'OX9 9ZB', 'Oxford', 'Oxford', 'UK');
+insert into location (street_address, postal_code, city, state_province, country_id) values
+    ('9702 Chester Road', '09629850293', 'Stretford', 'Manchester', 'UK');
+insert into location (street_address, postal_code, city, state_province, country_id) values
+    ('Schwanthalerstr. 7031', '80925', 'Munich', 'Bavaria', 'DE');
+insert into location (street_address, postal_code, city, state_province, country_id) values
+    ('Rua Frei Caneca 1360 ', '01307-002', 'Sao Paulo', 'Sao Paulo', 'BR');
+insert into location (street_address, postal_code, city, state_province, country_id) values
+    ('20 Rue des Corps-Saints', '1730', 'Geneva', 'Geneve', 'CH');
+insert into location (street_address, postal_code, city, state_province, country_id) values
+    ('Murtenstrasse 921', '3095', 'Bern', 'BE', 'CH');
+insert into location (street_address, postal_code, city, state_province, country_id) values
+    ('Pieter Breughelstraat 837', '3029SK', 'Utrecht', 'Utrecht', 'NL');
+insert into location (street_address, postal_code, city, state_province, country_id) values
+    ('Mariano Escobedo 9991', '11932', 'Mexico City', 'Distrito Federal', 'MX');
 
---
-create table departments(
+-- "one" job to many employees
+create table job (
+    job_id integer primary key,
+    title varchar(35) not null,
+    min_salary integer,
+    max_salary integer,
+	
+    constraint job_salary_ck check (min_salary < max_salary)
+);
+
+insert into job (title, min_salary, max_salary) values ('President', 20080, 40000);
+insert into job (title, min_salary, max_salary) values ('Vice President', 15000, 30000);
+insert into job (title, min_salary, max_salary) values ('Assistant', 3000, 6000);
+insert into job (title, min_salary, max_salary) values ('Finance Manager', 8200, 16000);
+insert into job (title, min_salary, max_salary) values ('Accountant', 4200, 9000);
+insert into job (title, min_salary, max_salary) values ('Accounting Manager', 8200, 16000);
+insert into job (title, min_salary, max_salary) values ('Public Accountant', 4200, 9000);
+insert into job (title, min_salary, max_salary) values ('Sales Manager', 10000, 20080);
+insert into job (title, min_salary, max_salary) values ('Sales Representative', 6000, 12008);
+insert into job (title, min_salary, max_salary) values ('Purchasing Manager', 8000, 15000);
+insert into job (title, min_salary, max_salary) values ('Purchasing Clerk', 2500, 5500);
+insert into job (title, min_salary, max_salary) values ('Stock Manager', 5500, 8500);
+insert into job (title, min_salary, max_salary) values ('Stock Clerk', 2008, 5000);
+insert into job (title, min_salary, max_salary) values ('Shipping Clerk', 2500, 5500);
+insert into job (title, min_salary, max_salary) values ('Programmer', 4000, 10000);
+insert into job (title, min_salary, max_salary) values ('Marketing Manager', 9000, 15000);
+insert into job (title, min_salary, max_salary) values ('Marketing Representative', 4000, 9000);
+insert into job (title, min_salary, max_salary) values ('Human Resources Representative', 4000, 9000);
+insert into job (title, min_salary, max_salary) values ('Public Relations Representative', 4500, 10500);
+
+-- a table with a complicated relation with employee, and "many" to one location
+create table department (
     department_id integer primary key,
-    department_name varchar(30) not null,
+    name varchar(30) not null,
     manager_id integer,
     location_id integer,
 
-    constraint departments_location_fk foreign key(location_id) references locations(location_id)
+    constraint department_location_fk foreign key (location_id) references location (location_id)
 );
 
-insert into departments (department_id,department_name,manager_id,location_id) values ('10','Administration','200','1700');
-insert into departments (department_id,department_name,manager_id,location_id) values ('20','Marketing','201','1800');
-insert into departments (department_id,department_name,manager_id,location_id) values ('30','Purchasing','114','1700');
-insert into departments (department_id,department_name,manager_id,location_id) values ('40','Human Resources','203','2400');
-insert into departments (department_id,department_name,manager_id,location_id) values ('50','Shipping','121','1500');
-insert into departments (department_id,department_name,manager_id,location_id) values ('60','IT','103','1400');
-insert into departments (department_id,department_name,manager_id,location_id) values ('70','Public Relations','204','2700');
-insert into departments (department_id,department_name,manager_id,location_id) values ('80','Sales','145','2500');
-insert into departments (department_id,department_name,manager_id,location_id) values ('90','Executive','100','1700');
-insert into departments (department_id,department_name,manager_id,location_id) values ('100','Finance','108','1700');
-insert into departments (department_id,department_name,manager_id,location_id) values ('110','Accounting','205','1700');
-insert into departments (department_id,department_name,manager_id,location_id) values ('120','Treasury',null,'1700');
-insert into departments (department_id,department_name,manager_id,location_id) values ('130','Corporate Tax',null,'1700');
-insert into departments (department_id,department_name,manager_id,location_id) values ('140','Control And Credit',null,'1700');
-insert into departments (department_id,department_name,manager_id,location_id) values ('150','Shareholder Services',null,'1700');
-insert into departments (department_id,department_name,manager_id,location_id) values ('160','Benefits',null,'1700');
-insert into departments (department_id,department_name,manager_id,location_id) values ('170','Manufacturing',null,'1700');
-insert into departments (department_id,department_name,manager_id,location_id) values ('180','Construction',null,'1700');
-insert into departments (department_id,department_name,manager_id,location_id) values ('190','Contracting',null,'1700');
-insert into departments (department_id,department_name,manager_id,location_id) values ('200','Operations',null,'1700');
-insert into departments (department_id,department_name,manager_id,location_id) values ('210','IT Support',null,'1700');
-insert into departments (department_id,department_name,manager_id,location_id) values ('220','NOC',null,'1700');
-insert into departments (department_id,department_name,manager_id,location_id) values ('230','IT Helpdesk',null,'1700');
-insert into departments (department_id,department_name,manager_id,location_id) values ('240','Government Sales',null,'1700');
-insert into departments (department_id,department_name,manager_id,location_id) values ('250','Retail Sales',null,'1700');
-insert into departments (department_id,department_name,manager_id,location_id) values ('260','Recruiting',null,'1700');
-insert into departments (department_id,department_name,manager_id,location_id) values ('270','Payroll',null,'1700');
+insert into department (name, location_id) values ('Administration', 8);
+insert into department (name, location_id) values ('Marketing', 9);
+insert into department (name, location_id) values ('Purchasing', 8);
+insert into department (name, location_id) values ('Human Resources', 15);
+insert into department (name, location_id) values ('Shipping', 6);
+insert into department (name, location_id) values ('IT', 5);
+insert into department (name, location_id) values ('Public Relations', 18);
+insert into department (name, location_id) values ('Sales', 16);
+insert into department (name, location_id) values ('Executive', 8);
+insert into department (name, location_id) values ('Finance', 8);
+insert into department (name, location_id) values ('Accounting', 8);
 
-create table employees(
+-- other departements, not used
+insert into department (name) values ('Treasury');
+insert into department (name) values ('Benefits');
+insert into department (name) values ('Manufacturing');
+insert into department (name) values ('Contracting');
+insert into department (name) values ('Operations');
+insert into department (name) values ('IT Support');
+insert into department (name) values ('IT Helpdesk');
+insert into department (name) values ('Recruiting');
+
+-- the core table, with many relations (also a self - manager)
+create table employee (
     employee_id integer primary key,
     first_name varchar(20),
     last_name varchar(25) not null,
-    email varchar(25) unique not null,
-    phone_number varchar(20),
-    hire_date date not null,
-    job_id varchar(10) not null,
+    phone integer unique not null,
+    hired date not null,
+    job_id integer not null,
     salary decimal(8,2),
-    commission_pct decimal(2,2),
+    commission decimal(2,2),
     manager_id integer,
     department_id integer,
 
-    constraint emp_salary_min check (salary > 0),
-    constraint employees_job_fk foreign key(job_id) references jobs(job_id),
-    constraint employees_department_fk foreign key(department_id) references departments(department_id)
+    constraint employee_salary_ck check (salary > 0),
+    constraint employee_job_fk foreign key (job_id) references job (job_id),
+    constraint employee_department_fk foreign key (department_id) references department (department_id),
+    constraint employee_manager_fk foreign key (manager_id) references employee (employee_id)
 );
 
-INSERT INTO employees VALUES
-    (100,'Steven','King','SKING','515.123.4567','2003-06-17','AD_PRES',24000.00,NULL,NULL,90),	
-    (101,'Neena','Kochhar','NKOCHHAR','515.123.4568','2005-09-21','AD_VP',17000.00,NULL,100,90),
-	(102,'Lex','De Haan','LDEHAAN','515.123.4569','2001-01-13','AD_VP',17000.00,NULL,100,90),
-	(103,'Alexander','Hunold','AHUNOLD','590.423.4567','2006-01-03','IT_PROG',9000.00,NULL,102,60),
-	(104,'Bruce','Ernst','BERNST','590.423.4568','2007-05-21','IT_PROG',6000.00,NULL,103,60),	
-	(105,'David','Austin','DAUSTIN','590.423.4569','2005-06-25','IT_PROG',4800.00,NULL,103,60),
-	(106,'Valli','Pataballa','VPATABAL','590.423.4560','2006-02-05','IT_PROG',4800.00,NULL,103,60),
-	(107,'Diana','Lorentz','DLORENTZ','590.423.5567','2007-02-07','IT_PROG',4200.00,NULL,103,60),
-	(108,'Nancy','Greenberg','NGREENBE','515.124.4569','2002-08-17','FI_MGR',12008.00,NULL,101,100),
-	(109,'Daniel','Faviet','DFAVIET','515.124.4169','2002-08-16','FI_ACCOUNT',9000.00,NULL,108,100),
-	(110,'John','Chen','JCHEN','515.124.4269','2005-09-28','FI_ACCOUNT',8200.00,NULL,108,100),
-	(111,'Ismael','Sciarra','ISCIARRA','515.124.4369','2005-09-30','FI_ACCOUNT',7700.00,NULL,108,100),
-	(112,'Jose Manuel','Urman','JMURMAN','515.124.4469','2006-03-07','FI_ACCOUNT',7800.00,NULL,108,100),
-	(113,'Luis','Popp','LPOPP','515.124.4567','2007-12-07','FI_ACCOUNT',6900.00,NULL,108,100),
-	(114,'Den','Raphaely','DRAPHEAL','515.127.4561','2002-12-07','PU_MAN',11000.00,NULL,100,30),
-	(115,'Alexander','Khoo','AKHOO','515.127.4562','2003-05-18','PU_CLERK',3100.00,NULL,114,30),
-	(116,'Shelli','Baida','SBAIDA','515.127.4563','2005-12-24','PU_CLERK',2900.00,NULL,114,30),
-	(117,'Sigal','Tobias','STOBIAS','515.127.4564','2005-07-24','PU_CLERK',2800.00,NULL,114,30),
-	(118,'Guy','Himuro','GHIMURO','515.127.4565','2006-11-15','PU_CLERK',2600.00,NULL,114,30),
-	(119,'Karen','Colmenares','KCOLMENA','515.127.4566','2007-08-10','PU_CLERK',2500.00,NULL,114,30),
-	(120,'Matthew','Weiss','MWEISS','650.123.1234','2004-07-18','ST_MAN',8000.00,NULL,100,50),
-	(121,'Adam','Fripp','AFRIPP','650.123.2234','2005-04-10','ST_MAN',8200.00,NULL,100,50),
-	(122,'Payam','Kaufling','PKAUFLIN','650.123.3234','2003-05-01','ST_MAN',7900.00,NULL,100,50),
-	(123,'Shanta','Vollman','SVOLLMAN','650.123.4234','2005-10-10','ST_MAN',6500.00,NULL,100,50),
-	(124,'Kevin','Mourgos','KMOURGOS','650.123.5234','2007-11-16','ST_MAN',5800.00,NULL,100,50),
-	(125,'Julia','Nayer','JNAYER','650.124.1214','2005-07-16','ST_CLERK',3200.00,NULL,120,50),
-	(126,'Irene','Mikkilineni','IMIKKILI','650.124.1224','2006-09-28','ST_CLERK',2700.00,NULL,120,50),
-	(127,'James','Landry','JLANDRY','650.124.1334','2007-01-14','ST_CLERK',2400.00,NULL,120,50),
-	(128,'Steven','Markle','SMARKLE','650.124.1434','2008-03-08','ST_CLERK',2200.00,NULL,120,50),
-	(129,'Laura','Bissot','LBISSOT','650.124.5234','2005-08-20','ST_CLERK',3300.00,NULL,121,50),
-	(130,'Mozhe','Atkinson','MATKINSO','650.124.6234','2005-10-30','ST_CLERK',2800.00,NULL,121,50),
-	(131,'James','Marlow','JAMRLOW','650.124.7234','2005-02-16','ST_CLERK',2500.00,NULL,121,50),
-	(132,'TJ','Olson','TJOLSON','650.124.8234','2007-04-10','ST_CLERK',2100.00,NULL,121,50),
-	(133,'Jason','Mallin','JMALLIN','650.127.1934','2004-06-14','ST_CLERK',3300.00,NULL,122,50),
-	(134,'Michael','Rogers','MROGERS','650.127.1834','2006-08-26','ST_CLERK',2900.00,NULL,122,50),
-	(135,'Ki','Gee','KGEE','650.127.1734','2007-12-12','ST_CLERK',2400.00,NULL,122,50),
-	(136,'Hazel','Philtanker','HPHILTAN','650.127.1634','2008-02-06','ST_CLERK',2200.00,NULL,122,50),
-	(137,'Renske','Ladwig','RLADWIG','650.121.1234','2003-07-14','ST_CLERK',3600.00,NULL,123,50),
-	(138,'Stephen','Stiles','SSTILES','650.121.2034','2005-10-26','ST_CLERK',3200.00,NULL,123,50),
-	(139,'John','Seo','JSEO','650.121.2019','2006-02-12','ST_CLERK',2700.00,NULL,123,50),
-	(140,'Joshua','Patel','JPATEL','650.121.1834','2006-04-06','ST_CLERK',2500.00,NULL,123,50),
-	(141,'Trenna','Rajs','TRAJS','650.121.8009','2003-10-17','ST_CLERK',3500.00,NULL,124,50),
-	(142,'Curtis','Davies','CDAVIES','650.121.2994','2005-01-29','ST_CLERK',3100.00,NULL,124,50),
-	(143,'Randall','Matos','RMATOS','650.121.2874','2006-03-15','ST_CLERK',2600.00,NULL,124,50),
-	(144,'Peter','Vargas','PVARGAS','650.121.2004','2006-07-09','ST_CLERK',2500.00,NULL,124,50),
-	(145,'John','Russell','JRUSSEL','011.44.1344.429268','2004-10-01','SA_MAN',14000.00,0.40,100,80),
-	(146,'Karen','Partners','KPARTNER','011.44.1344.467268','2005-01-05','SA_MAN',13500.00,0.30,100,80),
-	(147,'Alberto','Errazuriz','AERRAZUR','011.44.1344.429278','2005-03-10','SA_MAN',12000.00,0.30,100,80),
-	(148,'Gerald','Cambrault','GCAMBRAU','011.44.1344.619268','2007-10-15','SA_MAN',11000.00,0.30,100,80),
-	(149,'Eleni','Zlotkey','EZLOTKEY','011.44.1344.429018','2008-01-29','SA_MAN',10500.00,0.20,100,80),
-	(150,'Peter','Tucker','PTUCKER','011.44.1344.129268','2005-01-30','SA_REP',10000.00,0.30,145,80),
-	(151,'David','Bernstein','DBERNSTE','011.44.1344.345268','2005-03-24','SA_REP',9500.00,0.25,145,80),
-	(152,'Peter','Hall','PHALL','011.44.1344.478968','2005-08-20','SA_REP',9000.00,0.25,145,80),
-	(153,'Christopher','Olsen','COLSEN','011.44.1344.498718','2006-03-30','SA_REP',8000.00,0.20,145,80),
-	(154,'Nanette','Cambrault','NCAMBRAU','011.44.1344.987668','2006-12-09','SA_REP',7500.00,0.20,145,80),
-	(155,'Oliver','Tuvault','OTUVAULT','011.44.1344.486508','2007-11-23','SA_REP',7000.00,0.15,145,80),
-	(156,'Janette','King','JKING','011.44.1345.429268','2004-01-30','SA_REP',10000.00,0.35,146,80),
-	(157,'Patrick','Sully','PSULLY','011.44.1345.929268','2004-03-04','SA_REP',9500.00,0.35,146,80),
-	(158,'Allan','McEwen','AMCEWEN','011.44.1345.829268','2004-08-01','SA_REP',9000.00,0.35,146,80),
-	(159,'Lindsey','Smith','LSMITH','011.44.1345.729268','2005-03-10','SA_REP',8000.00,0.30,146,80),
-	(160,'Louise','Doran','LDORAN','011.44.1345.629268','2005-12-15','SA_REP',7500.00,0.30,146,80),
-	(161,'Sarath','Sewall','SSEWALL','011.44.1345.529268','2006-11-03','SA_REP',7000.00,0.25,146,80),
-	(162,'Clara','Vishney','CVISHNEY','011.44.1346.129268','2005-11-11','SA_REP',10500.00,0.25,147,80),
-	(163,'Danielle','Greene','DGREENE','011.44.1346.229268','2007-03-19','SA_REP',9500.00,0.15,147,80),
-	(164,'Mattea','Marvins','MMARVINS','011.44.1346.329268','2008-01-24','SA_REP',7200.00,0.10,147,80),
-	(165,'David','Lee','DLEE','011.44.1346.529268','2008-02-23','SA_REP',6800.00,0.10,147,80),
-	(166,'Sundar','Ande','SANDE','011.44.1346.629268','2008-03-24','SA_REP',6400.00,0.10,147,80),
-	(167,'Amit','Banda','ABANDA','011.44.1346.729268','2008-04-21','SA_REP',6200.00,0.10,147,80),
-	(168,'Lisa','Ozer','LOZER','011.44.1343.929268','2005-03-11','SA_REP',11500.00,0.25,148,80),
-	(169,'Harrison','Bloom','HBLOOM','011.44.1343.829268','2006-03-23','SA_REP',10000.00,0.20,148,80),
-	(170,'Tayler','Fox','TFOX','011.44.1343.729268','2006-01-24','SA_REP',9600.00,0.20,148,80),
-	(171,'William','Smith','WSMITH','011.44.1343.629268','2007-02-23','SA_REP',7400.00,0.15,148,80),
-	(172,'Elizabeth','Bates','EBATES','011.44.1343.529268','2007-03-24','SA_REP',7300.00,0.15,148,80),
-	(173,'Sundita','Kumar','SKUMAR','011.44.1343.329268','2008-04-21','SA_REP',6100.00,0.10,148,80),
-	(174,'Ellen','Abel','EABEL','011.44.1644.429267','2004-05-11','SA_REP',11000.00,0.30,149,80),
-	(175,'Alyssa','Hutton','AHUTTON','011.44.1644.429266','2005-03-19','SA_REP',8800.00,0.25,149,80),
-	(176,'Jonathon','Taylor','JTAYLOR','011.44.1644.429265','2006-03-24','SA_REP',8600.00,0.20,149,80),
-	(177,'Jack','Livingston','JLIVINGS','011.44.1644.429264','2006-04-23','SA_REP',8400.00,0.20,149,80),
-	(178,'Kimberely','Grant','KGRANT','011.44.1644.429263','2007-05-24','SA_REP',7000.00,0.15,149,NULL),
-	(179,'Charles','Johnson','CJOHNSON','011.44.1644.429262','2008-01-04','SA_REP',6200.00,0.10,149,80),
-	(180,'Winston','Taylor','WTAYLOR','650.507.9876','2006-01-24','SH_CLERK',3200.00,NULL,120,50),
-	(181,'Jean','Fleaur','JFLEAUR','650.507.9877','2006-02-23','SH_CLERK',3100.00,NULL,120,50),
-	(182,'Martha','Sullivan','MSULLIVA','650.507.9878','2007-06-21','SH_CLERK',2500.00,NULL,120,50),
-	(183,'Girard','Geoni','GGEONI','650.507.9879','2008-02-03','SH_CLERK',2800.00,NULL,120,50),
-	(184,'Nandita','Sarchand','NSARCHAN','650.509.1876','2004-01-27','SH_CLERK',4200.00,NULL,121,50),
-	(185,'Alexis','Bull','ABULL','650.509.2876','2005-02-20','SH_CLERK',4100.00,NULL,121,50),
-	(186,'Julia','Dellinger','JDELLING','650.509.3876','2006-06-24','SH_CLERK',3400.00,NULL,121,50),
-	(187,'Anthony','Cabrio','ACABRIO','650.509.4876','2007-02-07','SH_CLERK',3000.00,NULL,121,50),
-	(188,'Kelly','Chung','KCHUNG','650.505.1876','2005-06-14','SH_CLERK',3800.00,NULL,122,50),
-	(189,'Jennifer','Dilly','JDILLY','650.505.2876','2005-08-13','SH_CLERK',3600.00,NULL,122,50),
-	(190,'Timothy','Gates','TGATES','650.505.3876','2006-07-11','SH_CLERK',2900.00,NULL,122,50),
-	(191,'Randall','Perkins','RPERKINS','650.505.4876','2007-12-19','SH_CLERK',2500.00,NULL,122,50),
-	(192,'Sarah','Bell','SBELL','650.501.1876','2004-02-04','SH_CLERK',4000.00,NULL,123,50),
-	(193,'Britney','Everett','BEVERETT','650.501.2876','2005-03-03','SH_CLERK',3900.00,NULL,123,50),
-	(194,'Samuel','McCain','SMCCAIN','650.501.3876','2006-07-01','SH_CLERK',3200.00,NULL,123,50),
-	(195,'Vance','Jones','VJONES','650.501.4876','2007-03-17','SH_CLERK',2800.00,NULL,123,50),
-	(196,'Alana','Walsh','AWALSH','650.507.9811','2006-04-24','SH_CLERK',3100.00,NULL,124,50),
-	(197,'Kevin','Feeney','KFEENEY','650.507.9822','2006-05-23','SH_CLERK',3000.00,NULL,124,50),
-	(198,'Donald','OConnell','DOCONNEL','650.507.9833','2007-06-21','SH_CLERK',2600.00,NULL,124,50),
-	(199,'Douglas','Grant','DGRANT','650.507.9844','2008-01-13','SH_CLERK',2600.00,NULL,124,50),
-	(200,'Jennifer','Whalen','JWHALEN','515.123.4444','2003-09-17','AD_ASST',4400.00,NULL,101,10),
-	(201,'Michael','Hartstein','MHARTSTE','515.123.5555','2004-02-17','MK_MAN',13000.00,NULL,100,20),
-	(202,'Pat','Fay','PFAY','603.123.6666','2005-08-17','MK_REP',6000.00,NULL,201,20),
-	(203,'Susan','Mavris','SMAVRIS','515.123.7777','2002-06-07','HR_REP',6500.00,NULL,101,40),
-	(204,'Hermann','Baer','HBAER','515.123.8888','2002-06-07','PR_REP',10000.00,NULL,101,70),
-	(205,'Shelley','Higgins','SHIGGINS','515.123.8080','2002-06-07','AC_MGR',12008.00,NULL,101,110),
-	(206,'William','Gietz','WGIETZ','515.123.8181','2002-06-07','AC_ACCOUNT',8300.00,NULL,205,110);
+-- employees with no commission
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Steven', 'King', 4511, '2016-06-17', (select job_id from job where title = 'President'), 24000);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Neena', 'Kochhar', 4568, '2014-09-21', (select job_id from job where title = 'Vice President'), 17000);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Lex', 'De Haan', 4518, '2014-01-13', (select job_id from job where title = 'Vice President'), 17000);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Alexander', 'Hunold', 4567, '2019-01-06', (select job_id from job where title = 'Programmer'), 9000);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Bruce', 'Ernst', 4268, '2021-05-21', (select job_id from job where title = 'Programmer'), 6000);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('David', 'Austin', 4571, '2018-06-25', (select job_id from job where title = 'Programmer'), 4800);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Valli', 'Pataballa', 4560, '2019-02-05', (select job_id from job where title = 'Programmer'), 4800);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Diana', 'Lorentz', 5567, '2020-02-07', (select job_id from job where title = 'Programmer'), 4200);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Nancy', 'Greenberg', 4569, '2015-08-17', (select job_id from job where title = 'Finance Manager'), 12008);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Daniel', 'Faviet', 4169, '2015-08-16', (select job_id from job where title = 'Accountant'), 9000);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('John', 'Chen', 4269, '2018-09-28', (select job_id from job where title = 'Accountant'), 8200);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Ismael', 'Sciarra', 4369, '2018-09-05', (select job_id from job where title = 'Accountant'), 7700);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Jose Manuel', 'Urman', 4469, '2019-03-07', (select job_id from job where title = 'Accountant'), 7800);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Luis', 'Popp', 4597, '2020-12-07', (select job_id from job where title = 'Accountant'), 6900);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Den', 'Raphaely', 4561, '2020-12-02', (select job_id from job where title = 'Purchasing Manager'), 11000);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Alexander', 'Khoo', 4562, '2021-05-03', (select job_id from job where title = 'Purchasing Clerk'), 3100);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Shelli', 'Baida', 4563, '2018-12-24', (select job_id from job where title = 'Purchasing Clerk'), 2900);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Sigal', 'Tobias', 4564, '2018-07-24', (select job_id from job where title = 'Purchasing Clerk'), 2800);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Guy', 'Himuro', 4565, '2019-11-15', (select job_id from job where title = 'Purchasing Clerk'), 2600);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Karen', 'Colmenares', 4566, '2021-08-07', (select job_id from job where title = 'Purchasing Clerk'), 2500);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Matthew', 'Weiss', 4330, '2017-07-18', (select job_id from job where title = 'Stock Manager'), 8000);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Adam', 'Fripp', 2234, '2018-04-10', (select job_id from job where title = 'Stock Manager'), 8200);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Payam', 'Kaufling', 3234, '2016-05-01', (select job_id from job where title = 'Stock Manager'), 7900);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Shanta', 'Vollman', 4234, '2018-10-10', (select job_id from job where title = 'Stock Manager'), 6500);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Kevin', 'Mourgos', 4244, '2020-11-16', (select job_id from job where title = 'Stock Manager'), 5800);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Julia', 'Nayer', 4214, '2018-07-16', (select job_id from job where title = 'Stock Clerk'), 3200);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Irene', 'Mikkilineni', 4224, '2019-09-06', (select job_id from job where title = 'Stock Clerk'), 2700);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('James', 'Landry', 4334, '2020-01-14', (select job_id from job where title = 'Stock Clerk'), 2400);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Steven', 'Markle', 4434, '2021-03-08', (select job_id from job where title = 'Stock Clerk'), 2200);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Laura', 'Bissot', 5234, '2018-08-20', (select job_id from job where title = 'Stock Clerk'), 3300);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Mozhe', 'Atkinson', 6234, '2018-10-30',(select job_id from job where title = 'Stock Clerk'), 2800);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('James', 'Marlow', 7234, '2018-02-16', (select job_id from job where title = 'Stock Clerk'), 2500);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('TJ', 'Olson', 8234, '2020-04-10', (select job_id from job where title = 'Stock Clerk'), 2100);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Jason', 'Mallin', 1934, '2017-06-14', (select job_id from job where title = 'Stock Clerk'), 3300);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Michael', 'Rogers', 4834, '2019-08-26', (select job_id from job where title = 'Stock Clerk'), 2900);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Ki', 'Gee', 4734, '2020-12-12', (select job_id from job where title = 'Stock Clerk'), 2400);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Hazel', 'Philtanker', 4634, '2021-02-06', (select job_id from job where title = 'Stock Clerk'), 2200);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Renske', 'Ladwig', 4233, '2016-07-14', (select job_id from job where title = 'Stock Clerk'), 3600);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Stephen', 'Stiles', 4034, '2018-10-26', (select job_id from job where title = 'Stock Clerk'), 3200);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('John', 'Scantamburlo', 4019, '2019-02-12', (select job_id from job where title = 'Stock Clerk'), 2700);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Joshua', 'Patel', 4824, '2019-04-06', (select job_id from job where title = 'Stock Clerk'), 2500);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Trenna', 'Rajs', 4009, '2016-10-17', (select job_id from job where title = 'Stock Clerk'), 3500);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Curtis', 'Davies', 4994, '2018-01-29', (select job_id from job where title = 'Stock Clerk'), 3100);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Randall', 'Matos', 4874, '2019-03-15', (select job_id from job where title = 'Stock Clerk'), 2600);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Peter', 'Vargas', 4004, '2019-07-09', (select job_id from job where title = 'Stock Clerk'), 2500);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Winston', 'Taylor', 4276, '2019-01-24', (select job_id from job where title = 'Shipping Clerk'), 3200);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Jean', 'Fleaur', 4277, '2019-02-23', (select job_id from job where title = 'Shipping Clerk'), 3100);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Martha', 'Sullivan', 4878, '2020-06-21', (select job_id from job where title = 'Shipping Clerk'), 2500);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Girard', 'Geoni', 4879, '2021-02-03', (select job_id from job where title = 'Shipping Clerk'), 2800);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Nandita', 'Sarchand', 4816, '2017-01-27', (select job_id from job where title = 'Shipping Clerk'), 4200);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Alexis', 'Bull', 4846, '2018-02-20', (select job_id from job where title = 'Shipping Clerk'), 4100);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Juliet', 'Dullinger', 4256, '2019-06-24', (select job_id from job where title = 'Shipping Clerk'), 3400);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Anthony', 'Cabrio', 4271, '2020-02-07', (select job_id from job where title = 'Shipping Clerk'), 3000);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Kelly', 'Chung', 4376, '2018-06-14', (select job_id from job where title = 'Shipping Clerk'), 3800);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Jennifer', 'Dilly', 4872, '2018-08-13', (select job_id from job where title = 'Shipping Clerk'), 3600);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Tim', 'Gates', 4871, '2019-07-11', (select job_id from job where title = 'Shipping Clerk'), 2900);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Randall', 'Perkins', 4576, '2020-12-19', (select job_id from job where title = 'Shipping Clerk'), 2500);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Sarah', 'Bell', 4261, '2017-02-04', (select job_id from job where title = 'Shipping Clerk'), 4000);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Britney', 'Everett', 4226, '2015-03-03', (select job_id from job where title = 'Shipping Clerk'), 3900);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Samuel', 'McCain', 4218, '2016-07-01', (select job_id from job where title = 'Shipping Clerk'), 3200);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Vance', 'Jones', 4275, '2017-03-17', (select job_id from job where title = 'Shipping Clerk'), 2800);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Alana', 'Walsh', 4211, '2019-04-24', (select job_id from job where title = 'Shipping Clerk'), 3100);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Kevin', 'Feeney', 4222, '2019-05-23', (select job_id from job where title = 'Shipping Clerk'), 3000);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Donald', 'OConnell', 4231, '2020-06-21', (select job_id from job where title = 'Shipping Clerk'), 2600);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Douglas', 'Grant', 4240, '2021-01-13', (select job_id from job where title = 'Shipping Clerk'), 2600);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Jennifer', 'Whalen', 4241, '2016-09-17', (select job_id from job where title = 'Assistant'), 4400);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Michael', 'Hartstein', 4255, '2017-02-17', (select job_id from job where title = 'Marketing Manager'), 13000);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Pat', 'Fay', 4259, '2018-08-17', (select job_id from job where title = 'Marketing Representative'), 6000);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Susan', 'Mavris', 4215, '2015-06-07', (select job_id from job where title = 'Human Resources Representative'), 6500);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Hermann', 'Baer', 4288, '2015-06-07', (select job_id from job where title = 'Public Relations Representative'), 10000);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Shelley', 'Higgins', 4280, '2015-06-07', (select job_id from job where title = 'Accounting Manager'), 12008);
+insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+    ('Willy', 'Gietz', 4281, '2015-06-07', (select job_id from job where title = 'Public Accountant'), 8300);
 
---
+-- sales have commission
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('John', 'Russell', 9200, '2017-10-01', (select job_id from job where title = 'Sales Manager'), 14000, 0.35);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Karen', 'Partners', 9261, '2018-01-05', (select job_id from job where title = 'Sales Manager'), 13500, 0.25);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Alberto', 'Errazuriz', 9218, '2018-03-10', (select job_id from job where title = 'Sales Manager'), 12000, 0.25);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Gerald', 'Cambrault', 9211, '2020-10-15', (select job_id from job where title = 'Sales Manager'), 11000, 0.25);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Eleni', 'Zlotkey', 9018, '2018-01-29', (select job_id from job where title = 'Sales Manager'), 10500, 0.15);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Peter', 'Tucker', 9299, '2021-01-30', (select job_id from job where title = 'Sales Representative'), 10000, 0.25);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('David', 'Bernstein', 5268, '2018-03-24', (select job_id from job where title = 'Sales Representative'), 9500, 0.20);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Peter', 'Hall', 8968, '2018-08-20', (select job_id from job where title = 'Sales Representative'), 9000, 0.20);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Christopher', 'Olsen', 9718, '2019-03-30', (select job_id from job where title = 'Sales Representative'), 8000, 0.15);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Nanette', 'Cambrault', 9768, '2019-12-09', (select job_id from job where title = 'Sales Representative'), 7500, 0.15);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Oliver', 'Tuvault', 9508, '2020-11-23', (select job_id from job where title = 'Sales Representative'), 7000, 0.10);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Jane', 'King', 9228, '2017-01-30', (select job_id from job where title = 'Sales Representative'), 10000, 0.30);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Patrick', 'Sully', 9252, '2017-03-04', (select job_id from job where title = 'Sales Representative'), 9500, 0.30);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Allan', 'McEwen', 9222, '2017-08-01', (select job_id from job where title = 'Sales Representative'), 9000, 0.30);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Lindsey', 'Smith', 9221, '2018-03-10', (select job_id from job where title = 'Sales Representative'), 8000, 0.25);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Louise', 'Doran', 9225, '2018-12-15', (select job_id from job where title = 'Sales Representative'), 7500, 0.25);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Sarath', 'Sewall', 9212, '2019-11-03', (select job_id from job where title = 'Sales Representative'), 7000, 0.20);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Clara', 'Vishney', 9288, '2018-11-11', (select job_id from job where title = 'Sales Representative'), 10500, 0.20);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Danielle', 'Greene', 9213, '2020-03-19', (select job_id from job where title = 'Sales Representative'), 9500, 0.10);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Mattea', 'Marvins', 9256, '2021-01-24', (select job_id from job where title = 'Sales Representative'), 7200, 0.05);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('David', 'Lee', 9219, '2021-02-23', (select job_id from job where title = 'Sales Representative'), 6800, 0.05);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Sundar', 'Ande', 9201, '2021-03-24', (select job_id from job where title = 'Sales Representative'), 6400, 0.05);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Amit', 'Banda', 9208, '2021-04-21', (select job_id from job where title = 'Sales Representative'), 6200, 0.05);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Lisa', 'Ozer', 9229, '2018-03-11', (select job_id from job where title = 'Sales Representative'), 11500, 0.20);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Harrison', 'Bloom', 9286, '2019-03-23', (select job_id from job where title = 'Sales Representative'), 10000, 0.15);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Tayler', 'Fox', 9298, '2019-01-24', (select job_id from job where title = 'Sales Representative'), 9600, 0.15);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('William', 'Smith', 9255, '2020-02-23', (select job_id from job where title = 'Sales Representative'), 7400, 0.10);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Elizabeth', 'Bates', 9233, '2020-03-24', (select job_id from job where title = 'Sales Representative'), 7300, 0.10);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Sundita', 'Kumar', 9268, '2021-04-21', (select job_id from job where title = 'Sales Representative'), 6100, 0.05);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Ellen', 'Abel', 9267, '2017-05-11', (select job_id from job where title = 'Sales Representative'), 11000, 0.25);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Alyssa', 'Hutton', 9266, '2018-03-19', (select job_id from job where title = 'Sales Representative'), 8800, 0.20);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Jonathon', 'Taylor', 9265, '2019-03-24', (select job_id from job where title = 'Sales Representative'), 8600, 0.15);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Jack', 'Livingston', 2926, '2019-04-23', (select job_id from job where title = 'Sales Representative'), 8400, 0.15);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Kimberely', 'Grant', 9263, '2020-05-24', (select job_id from job where title = 'Sales Representative'), 7000, 0.10);
+insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+    ('Charles', 'Johnson', 9262, '2021-01-04', (select job_id from job where title = 'Sales Representative'), 6200, 0.05);
 
--- alter table departments add constraint departments_manager_fk foreign key(manager_id) references employees(employee_id);
--- alter table employees add constraint employees_manager_fk foreign key(manager_id) references employees(employee_id);
+-- this alter table is N/A on SQLite!
+-- alter table department add constraint department_manager_fk foreign key (manager_id) references employee (employee_id);
+-- alter table employee add constraint employee_manager_fk foreign key (manager_id) references employee (employee_id);
 
-create table job_history(
-    employee_id integer not null,
-    start_date date not null,
-    end_date date not null,
-    job_id varchar(10) not null,
-    department_id integer,
+-- set the department FK
+update employee
+set department_id = ( select department_id from department where name =  'Accounting' )
+where job_id in ( select job_id from job where title in ('Public Accountant', 'Accounting Manager' ) );
 
-    constraint jhistory_pk primary key(employee_id, start_date),
-    constraint jhistory_date_interval check (end_date > start_date),
-    constraint jhistory_employee_fk foreign key(employee_id) references employees(employee_id),
-    constraint jhistory_job_fk foreign key(job_id) references jobs(job_id),
-    constraint jhistory_department_fk foreign key(department_id) references departments(department_id)
+update employee
+set department_id = ( select department_id from department where name =  'Administration' )
+where job_id = ( select job_id from job where title = 'Assistant' );
+
+update employee
+set department_id = ( select department_id from department where name =  'Executive' )
+where job_id in ( select job_id from job where title like '%President' );
+
+update employee
+set department_id = ( select department_id from department where name =  'Finance' )
+where job_id in ( select job_id from job where title in ('Finance Manager', 'Accountant') );
+
+update employee
+set department_id = ( select department_id from department where name =  'Human Resources' )
+where job_id = ( select job_id from job where title = 'Human Resources Representative' );
+
+update employee
+set department_id = ( select department_id from department where name =  'IT' )
+where job_id = ( select job_id from job where title = 'Programmer' );
+
+update employee
+set department_id = ( select department_id from department where name =  'Marketing' )
+where job_id in ( select job_id from job where title like 'Marketing%' );
+
+update employee
+set department_id = ( select department_id from department where name =  'Public Relations' )
+where job_id = ( select job_id from job where title = 'Public Relations Representative' );
+
+update employee
+set department_id = ( select department_id from department where name =  'Purchasing' )
+where job_id in ( select job_id from job where title like 'Purchasing%' );
+
+update employee
+set department_id = ( select department_id from department where name =  'Sales' )
+where job_id in ( select job_id from job where title like 'Sales%' ) and (first_name != 'Kimberely');
+
+update employee
+set department_id = ( select department_id from department where name =  'Shipping' )
+where job_id in ( select job_id from job where title = 'Shipping Clerk' or title like 'Stock%' );
+
+-- set the manager FK (self)
+update employee
+set manager_id = ( select employee_id from employee
+    where first_name =  'Steven' and last_name = 'King' )
+where job_id in ( select job_id from job where title in ('Vice President', 'Purchasing Manager', 'Stock Manager', 'Sales Manager', 'Marketing Manager' ));
+
+update employee
+set manager_id = ( select employee_id from employee
+    where first_name =  'Neena' and last_name = 'Kochhar' )
+where (first_name = 'Nancy' and last_name = 'Greenberg') or
+    (first_name = 'Shelley' and last_name = 'Higgins') or
+    (first_name = 'Jennifer' and last_name = 'Whalen') or
+    (first_name = 'Susan' and last_name = 'Mavris') or
+    (first_name = 'Hermann' and last_name = 'Baer');
+
+update employee
+set manager_id = ( select employee_id from employee
+    where first_name =  'Alexander' and last_name = 'Hunold' )
+where job_id = ( select job_id from job where title = 'Programmer') and last_name != 'Hunold';
+
+update employee
+set manager_id = ( select employee_id from employee
+    where first_name =  'Lex' and last_name = 'De Haan' )
+where (first_name = 'Alexander' and last_name = 'Hunold');
+
+update employee
+set manager_id = ( select employee_id from employee
+    where first_name =  'Nancy' and last_name = 'Greenberg' )
+where job_id = ( select job_id from job where title = 'Accountant');
+
+update employee
+set manager_id = ( select employee_id from employee
+    where first_name =  'Shelley' and last_name = 'Higgins' )
+where job_id = ( select job_id from job where title = 'Public Accountant');
+
+update employee
+set manager_id = ( select employee_id from employee
+    where first_name =  'Michael' and last_name = 'Hartstein' )
+where job_id = ( select job_id from job where title = 'Marketing Representative');
+
+update employee
+set manager_id = ( select employee_id from employee
+    where first_name =  'Den' and last_name = 'Raphaely' )
+where job_id = ( select job_id from job where title = 'Purchasing Clerk');
+
+update employee
+set manager_id = ( select employee_id from employee
+    where first_name =  'Matthew' and last_name = 'Weiss' )
+where (first_name = 'Julia' and last_name = 'Nayer') or
+    (first_name = 'Irene' and last_name = 'Mikkilineni') or
+    (first_name = 'James' and last_name = 'Landry') or
+    (first_name = 'Steven' and last_name = 'Markle') or
+    (first_name = 'Winston' and last_name = 'Taylor') or
+    (first_name = 'Jean' and last_name = 'Fleaur') or
+    (first_name = 'Martha' and last_name = 'Sullivan') or
+    (first_name = 'Girard' and last_name = 'Geoni');
+
+update employee
+set manager_id = ( select employee_id from employee
+    where first_name =  'Adam' and last_name = 'Fripp' )
+where (first_name = 'Laura' and last_name = 'Bissot') or
+    (first_name = 'Mozhe' and last_name = 'Atkinson') or
+    (first_name = 'James' and last_name = 'Marlow') or
+    (first_name = 'TJ' and last_name = 'Olson') or
+    (first_name = 'Nandita' and last_name = 'Sarchand') or
+    (first_name = 'Alexis' and last_name = 'Bull') or
+    (first_name = 'Juliet' and last_name = 'Dullinger') or
+    (first_name = 'Anthony' and last_name = 'Cabrio');
+
+update employee
+set manager_id = ( select employee_id from employee
+    where first_name =  'Payam' and last_name = 'Kaufling' )
+where (first_name = 'Jason' and last_name = 'Mallin') or
+    (first_name = 'Michael' and last_name = 'Rogers') or
+    (first_name = 'Ki' and last_name = 'Gee') or
+    (first_name = 'Hazel' and last_name = 'Philtanker') or
+    (first_name = 'Kelly' and last_name = 'Chung') or
+    (first_name = 'Jennifer' and last_name = 'Dilly') or
+    (first_name = 'Tim' and last_name = 'Gates') or
+    (first_name = 'Randall' and last_name = 'Perkins');
+
+update employee
+set manager_id = ( select employee_id from employee
+    where first_name =  'Shanta' and last_name = 'Vollman' )
+where (first_name = 'Renske' and last_name = 'Ladwig') or
+    (first_name = 'Stephen' and last_name = 'Stiles') or
+    (first_name = 'John' and last_name = 'Scantamburlo') or
+    (first_name = 'Joshua' and last_name = 'Patel') or
+    (first_name = 'Sarah' and last_name = 'Bell') or
+    (first_name = 'Britney' and last_name = 'Everett') or
+    (first_name = 'Samuel' and last_name = 'McCain') or
+    (first_name = 'Vance' and last_name = 'Jones');
+
+update employee
+set manager_id = ( select employee_id from employee
+    where first_name =  'Kevin' and last_name = 'Mourgos' )
+where (first_name = 'Trenna' and last_name = 'Rajs') or
+    (first_name = 'Curtis' and last_name = 'Davies') or
+    (first_name = 'Randall' and last_name = 'Matos') or
+    (first_name = 'Peter' and last_name = 'Vargas') or
+    (first_name = 'Alana' and last_name = 'Walsh') or
+    (first_name = 'Kevin' and last_name = 'Feeney') or
+    (first_name = 'Donald' and last_name = 'OConnell') or
+    (first_name = 'Douglas' and last_name = 'Grant');
+
+update employee
+set manager_id = ( select employee_id from employee
+    where first_name =  'John' and last_name = 'Russell' )
+where (first_name = 'Peter' and last_name = 'Tucker') or
+    (first_name = 'David' and last_name = 'Bernstein') or
+    (first_name = 'Peter' and last_name = 'Hall') or
+    (first_name = 'Christopher' and last_name = 'Olsen') or
+    (first_name = 'Nanette' and last_name = 'Cambrault') or
+    (first_name = 'Oliver' and last_name = 'Tuvault');
+
+update employee
+set manager_id = ( select employee_id from employee
+    where first_name =  'Karen' and last_name = 'Partners' )
+where (first_name = 'Jane' and last_name = 'King') or
+    (first_name = 'Patrick' and last_name = 'Sully') or
+    (first_name = 'Allan' and last_name = 'McEwen') or
+    (first_name = 'Lindsey' and last_name = 'Smith') or
+    (first_name = 'Louise' and last_name = 'Doran') or
+    (first_name = 'Sarath' and last_name = 'Sewall');
+
+update employee
+set manager_id = ( select employee_id from employee
+    where first_name =  'Alberto' and last_name = 'Errazuriz' )
+where (first_name = 'Clara' and last_name = 'Vishney') or
+    (first_name = 'Danielle' and last_name = 'Greene') or
+    (first_name = 'Mattea' and last_name = 'Marvins') or
+    (first_name = 'David' and last_name = 'Lee') or
+    (first_name = 'Sundar' and last_name = 'Ande') or
+    (first_name = 'Amit' and last_name = 'Banda');
+
+update employee
+set manager_id = ( select employee_id from employee
+    where first_name =  'Gerald' and last_name = 'Cambrault' )
+where (first_name = 'Lisa' and last_name = 'Ozer') or
+    (first_name = 'Harrison' and last_name = 'Bloom') or
+    (first_name = 'Tayler' and last_name = 'Fox') or
+    (first_name = 'William' and last_name = 'Smith') or
+    (first_name = 'Elizabeth' and last_name = 'Bates') or
+    (first_name = 'Sundita' and last_name = 'Kumar');
+
+update employee
+set manager_id = ( select employee_id from employee
+    where first_name =  'Eleni' and last_name = 'Zlotkey' )
+where (first_name = 'Ellen' and last_name = 'Abel') or
+    (first_name = 'Alyssa' and last_name = 'Hutton') or
+    (first_name = 'Jonathon' and last_name = 'Taylor') or
+    (first_name = 'Jack' and last_name = 'Livingston') or
+    (first_name = 'Kimberely' and last_name = 'Grant') or
+    (first_name = 'Charles' and last_name = 'Johnson');
+
+-- set manager FK on department table
+update department
+set manager_id = (
+    select employee_id
+    from employee
+    where first_name =  'Jennifer' and last_name = 'Whalen' )
+where name = 'Administration';
+
+update department
+set manager_id = (
+    select employee_id
+    from employee
+    where first_name =  'Michael' and last_name = 'Hartstein' )
+where name = 'Marketing';
+
+update department
+set manager_id = (
+    select employee_id
+    from employee
+    where first_name =  'Den' and last_name = 'Raphaely' )
+where name = 'Purchasing';
+
+update department
+set manager_id = (
+    select employee_id
+    from employee
+    where first_name =  'Susan' and last_name = 'Mavris' )
+where name = 'Human Resources';
+
+update department
+set manager_id = (
+    select employee_id
+    from employee
+    where first_name =  'Adam' and last_name = 'Fripp' )
+where name = 'Shipping';
+
+update department
+set manager_id = (
+    select employee_id
+    from employee
+    where first_name =  'Alexander' and last_name = 'Hunold' )
+where name = 'IT';
+
+update department
+set manager_id = (
+    select employee_id
+    from employee
+    where first_name =  'Hermann' and last_name = 'Baer' )
+where name = 'Public Relations';
+
+update department
+set manager_id = (
+    select employee_id
+    from employee
+    where first_name =  'John' and last_name = 'Russell' )
+where name = 'Sales';
+
+update department
+set manager_id = (
+    select employee_id
+    from employee
+    where first_name =  'Steven' and last_name = 'King' )
+where name = 'Executive';
+
+update department
+set manager_id = (
+    select employee_id
+    from employee
+    where first_name =  'Nancy' and last_name = 'Greenberg' )
+where name = 'Finance';
+
+update department
+set manager_id = (
+    select employee_id
+    from employee
+    where first_name =  'Shelley' and last_name = 'Higgins' )
+where name = 'Accounting';
+
+-- "one" car for one employee, "many" cars seviced by many services
+create table car(
+    car_id integer primary key,
+    name varchar(40) unique,
+    employee_id integer unique,
+
+    constraint car_employee_fk foreign key (employee_id) references employee (employee_id)
 );
 
-INSERT INTO job_history VALUES (101,'1997-09-21','2001-10-27','AC_ACCOUNT',110),
-    (101,'2001-10-28','2005-03-15','AC_MGR',110),
-    (102,'2001-01-13','2006-07-24','IT_PROG',60),
-    (114,'2006-03-24','2007-12-31','ST_CLERK',50),
-    (122,'2007-01-01','2007-12-31','ST_CLERK',50),
-    (176,'2006-03-24','2006-12-31','SA_REP',80),
-    (176,'2007-01-01','2007-12-31','SA_MAN',80),
-    (200,'1995-09-17','2001-06-17','AD_ASST',90),
-    (200,'2002-07-01','2006-12-31','AC_ACCOUNT',90),
-    (201,'2004-02-17','2007-12-19','MK_REP',20);
+insert into car (name, employee_id) values ('Silver Hornet', (
+    select employee_id
+    from employee
+    where first_name = 'Jennifer' and last_name = 'Whalen'));
 
--- extra playground
-drop table if exists team_coder;
-drop table if exists teams;
-drop table if exists coders;
-drop table if exists clients;
+insert into car (name, employee_id) values ('White Phantom', (
+    select employee_id
+    from employee
+    where first_name = 'Michael' and last_name = 'Hartstein'));
 
---
-create table clients (
-    client_id integer primary key,
-    name varchar(25) not null,
-    nickname varchar(10)
+insert into car (name, employee_id) values ('Batmobile', (
+    select employee_id
+    from employee
+    where first_name = 'Den' and last_name = 'Raphaely'));
+
+insert into car (name, employee_id) values ('Starsky', (
+    select employee_id
+    from employee
+    where first_name = 'Susan' and last_name = 'Mavris'));
+
+insert into car (name, employee_id) values ('Smurf', (
+    select employee_id
+    from employee
+    where first_name = 'Adam' and last_name = 'Fripp'));
+
+insert into car (name, employee_id) values ('Fireball', (
+    select employee_id
+    from employee
+    where first_name = 'Alexander' and last_name = 'Hunold'));
+
+insert into car (name, employee_id) values ('Poison', (
+    select employee_id
+    from employee
+    where first_name = 'Neena' and last_name = 'Kochhar'));
+
+insert into car (name, employee_id) values ('Katana', (
+    select employee_id
+    from employee
+    where first_name = 'Lex' and last_name = 'De Haan'));
+
+insert into car (name, employee_id) values ('Titanic', (
+    select employee_id
+    from employee
+    where first_name = 'Hermann' and last_name = 'Baer'));
+
+insert into car (name, employee_id) values ('Dracula', (
+    select employee_id
+    from employee
+    where first_name = 'John' and last_name = 'Russell'));
+
+insert into car (name, employee_id) values ('Zeppelin', (
+    select employee_id
+    from employee
+    where first_name = 'Steven' and last_name = 'King'));
+
+insert into car (name, employee_id) values ('Ruby', (
+    select employee_id
+    from employee
+    where first_name = 'Nancy' and last_name = 'Greenberg'));
+
+insert into car (name, employee_id) values ('Tortoise', (
+    select employee_id
+    from employee
+    where first_name = 'Shelley' and last_name = 'Higgins'));
+
+-- "many" services taking cares of many cars, many services could share one location
+create table service(
+    service_id integer primary key,
+    name varchar(40),
+    location_id integer,
+
+    constraint service_location_fk foreign key (location_id) references location (location_id)
 );
 
-insert into clients (name, nickname) values('Aleph Microservices', 'Alpha');
-insert into clients (name, nickname) values('Heavy Bertha Industries', 'Beta');
-insert into clients (name, nickname) values('Teragamma Consulting', 'Gamma');
-insert into clients (name, nickname) values('Lima Delta Services', 'Delta');
+insert into service (name, location_id) values ('Inspired Glass', 1);
+insert into service (name, location_id) values ('Faith Auto Repair', 1);
+insert into service (name, location_id) values ('Happy Brake', 14);
 
---
-create table coders
-as
-    select employee_id as coder_id, first_name, last_name, hire_date, salary
-    from employees
-    where department_id = 60;
+-- many to many with details
+create table car_service(
+    car_id integer,
+    service_id integer,
+    checkin timestamp,
+    checkout timestamp,
 
--- alter table coders modify coder_id int primary key;        
--- alter table coders add constraint coders_name_uq unique(first_name, last_name);
-
-insert into coders (coder_id, first_name, last_name, hire_date, salary) values (201, 'Tim', 'Ice', date('now'), 5760);
-
---
-create table teams(
-    team_id integer primary key,
-    name varchar(25),
-    leader_id integer unique,
-    client_id integer not null,
-
-    constraint teams_leader_fk foreign key(leader_id) references coders(coder_id),
-    constraint teams_client_fk foreign key(client_id) references clients(client_id)
+    constraint car_service_time_ck check (checkin < checkout),
+    primary key (car_id, service_id, checkin),
+    constraint car_service_car_fk foreign key (car_id) references car (car_id),
+    constraint car_service_service_fk foreign key (service_id) references service (service_id)
 );
 
-select * from coders;
-select * from clients;
-
-insert into teams (name, leader_id, client_id) values ('red', 103, 1);
-insert into teams (name, leader_id, client_id) values ('blue', 107, 1);
-insert into teams (name, leader_id, client_id) values ('green', 105, 2);
-
---
-create table team_coder(
-    team_id integer,
-    coder_id integer,
-
-    constraint team_coder_pk primary key(team_id, coder_id),
-    constraint team_coder_fk foreign key(team_id) references teams(team_id),
-    constraint coder_team_fk foreign key(coder_id) references coders(coder_id)
-);
-
-insert into team_coder values (1, 104);
-insert into team_coder values (1, 106);
-insert into team_coder values (1, 201);
-insert into team_coder values (2, 105);
-insert into team_coder values (2, 106);
-insert into team_coder values (2, 107);
-insert into team_coder values (3, 105);
-insert into team_coder values (3, 106);
-insert into team_coder values (3, 103);
+insert into car_service (car_id, service_id, checkin, checkout) values
+    (1, 1, '2021-08-01 15:00:00', '2021-08-01 16:00:00');
+insert into car_service (car_id, service_id, checkin, checkout) values
+    (5, 2, '2021-08-03 14:00:00', '2021-08-03 19:00:00');
+insert into car_service (car_id, service_id, checkin, checkout) values
+    (1, 2, '2021-08-04 08:00:00', '2021-08-04 20:00:00');
+insert into car_service (car_id, service_id, checkin, checkout) values
+    (1, 3, '2021-10-12 15:00:00', '2021-10-12 18:00:00');
