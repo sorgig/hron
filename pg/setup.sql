@@ -39,12 +39,11 @@ create table country(
 	constraint country_region_fk foreign key (region_id) references region (region_id)
 );
 
-do $$ 
-declare
-    v_europe integer;
-    v_americas integer;
-    v_asia integer;
-    v_mea integer;
+do $$ declare
+    v_europe region.region_id%type;
+    v_americas region.region_id%type;
+    v_asia region.region_id%type;
+    v_mea region.region_id%type;
 begin 
     select region_id into v_europe from region where name = 'Europe';
     select region_id into v_americas from region where name = 'Americas';
@@ -94,22 +93,21 @@ create table location(
 alter sequence location_location_id_seq restart with 1000 increment by 100;
 
 
-do $$ 
-declare
-    v_it char(2);
-    v_jp char(2);
-    v_us char(2);
-    v_ca char(2);
-    v_cn char(2);
-    v_in char(2);
-    v_au char(2);
-    v_sg char(2);
-    v_uk char(2);
-    v_de char(2);
-    v_br char(2);
-    v_ch char(2);
-    v_nl char(2);
-    v_mx char(2);
+do $$ declare
+    v_it country.country_id%type;
+    v_jp country.country_id%type;
+    v_us country.country_id%type;
+    v_ca country.country_id%type;
+    v_cn country.country_id%type;
+    v_in country.country_id%type;
+    v_au country.country_id%type;
+    v_sg country.country_id%type;
+    v_uk country.country_id%type;
+    v_de country.country_id%type;
+    v_br country.country_id%type;
+    v_ch country.country_id%type;
+    v_nl country.country_id%type;
+    v_mx country.country_id%type;
 begin
     select country_id into v_it from country where name = 'Italy';
     select country_id into v_jp from country where name = 'Japan';
@@ -207,7 +205,7 @@ begin;
     insert into job (title, min_salary, max_salary) values ('Public Relations Representative', 4500, 10500);
 commit;
 
--- a table with a complicated relation with employee, and "many" to one location
+-- a table with a complicated relation with employee, and in the role "many" to one location
 create table department (
 	department_id serial primary key,
 	name varchar(30) not null,
@@ -217,15 +215,14 @@ create table department (
 	constraint department_location_fk foreign key (location_id) references location(location_id)
 );
 
-do $$
-declare
-    v_sewa integer;
-    v_sltx integer;
-    v_toon integer;
-    v_lond integer;
-    v_sfca integer;
-    v_muba integer;
-    v_oxfr integer;
+do $$ declare
+    v_sewa location.location_id%type;
+    v_sltx location.location_id%type;
+    v_toon location.location_id%type;
+    v_lond location.location_id%type;
+    v_sfca location.location_id%type;
+    v_muba location.location_id%type;
+    v_oxfr location.location_id%type;
 begin
     select location_id into v_sewa from location where city = 'Seattle';
     select location_id into v_sltx from location where city = 'Southlake';
@@ -279,27 +276,26 @@ create table employee (
 
 alter sequence employee_employee_id_seq restart with 100;
 
-do $$
-declare
-    v_pres integer;
-    v_vprs integer;
-    v_asst integer;
-    v_fimg integer;
-    v_prog integer;
-    v_acct integer;
-    v_pumg integer;
-    v_puck integer;
-    v_stmg integer;
-    v_stck integer;
-    v_samg integer;
-    v_sarp integer;
-    v_shck integer;
-    v_mkmg integer;
-    v_mkrp integer;
-    v_hrrp integer;
-    v_prrp integer;
-    v_acmg integer;
-    v_puac integer;
+do $$ declare
+    v_pres job.job_id%type;
+    v_vprs job.job_id%type;
+    v_asst job.job_id%type;
+    v_fimg job.job_id%type;
+    v_prog job.job_id%type;
+    v_acct job.job_id%type;
+    v_pumg job.job_id%type;
+    v_puck job.job_id%type;
+    v_stmg job.job_id%type;
+    v_stck job.job_id%type;
+    v_samg job.job_id%type;
+    v_sarp job.job_id%type;
+    v_shck job.job_id%type;
+    v_mkmg job.job_id%type;
+    v_mkrp job.job_id%type;
+    v_hrrp job.job_id%type;
+    v_prrp job.job_id%type;
+    v_acmg job.job_id%type;
+    v_puac job.job_id%type;
 begin
     select job_id into v_pres from job where title = 'President';
     select job_id into v_vprs from job where title = 'Vice President';
@@ -541,7 +537,6 @@ begin
     commit;
 end $$;
 
-
 alter table department add constraint department_manager_fk foreign key (manager_id) references employee (employee_id);
 alter table employee add constraint employee_manager_fk foreign key (manager_id) references employee (employee_id);
 
@@ -596,7 +591,9 @@ create or replace procedure set_manager_fk_by_job(
     p_job_title in job.title%type)
 language plpgsql as $$ begin
     update employee
-    set manager_id = ( select employee_id from employee
+    set manager_id = (
+        select employee_id
+        from employee
         where first_name =  p_mgr_fname and last_name = p_mgr_lname )
     where job_id = ( select job_id from job where title = p_job_title );
 end $$;
@@ -608,7 +605,9 @@ create or replace procedure set_manager_fk_by_name(
     p_lname in employee.last_name%type)
 language plpgsql as $$ begin
     update employee
-    set manager_id = ( select employee_id from employee
+    set manager_id = (
+        select employee_id
+        from employee
         where first_name =  p_mgr_fname and last_name = p_mgr_lname )
     where first_name = p_fname and last_name = p_lname;
 end $$;
@@ -759,7 +758,7 @@ create or replace procedure insert_car(
     p_first_name in employee.first_name%type,
     p_last_name in employee.last_name%type)
 language plpgsql as $$ declare 
-    v_employee_id int := 100;
+    v_employee_id int;
 begin
     select employee_id into v_employee_id
     from employee
