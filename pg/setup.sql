@@ -785,14 +785,18 @@ begin;
     call insert_car('Tortoise', 'Shelley', 'Higgins');
 commit;
 
-create or replace procedure get_employee_car(
-    p_employee_id in employee.employee_id%type,
-    p_car_name out car.name%type)
-language plpgsql as $$ begin
-    select name
-    into p_car_name
-    from car
+create or replace function get_salary(
+    p_employee_id in employee.employee_id%type)
+returns employee.salary%type
+language plpgsql as $$ declare
+    v_salary employee.salary%type;
+begin
+    select salary
+    into v_salary
+    from employee
     where employee_id = p_employee_id;
+
+    return v_salary;
 end $$;
 
 -- "many" services taking cares of many cars, many services could share one location
