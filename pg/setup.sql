@@ -264,8 +264,8 @@ create table employee (
 	phone integer unique not null,
 	hired date not null,
 	job_id integer not null,
-	salary decimal(8,2),
-	commission decimal(2,2),
+	salary numeric(8,2),
+	commission numeric(2,2),
 	manager_id integer,
 	department_id integer,
 
