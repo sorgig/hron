@@ -10,7 +10,7 @@ select ceil(5.8), ceil(-5.2);
 select floor(5.8), floor(-5.2);
 
 -- module
-select mod(8, 3), mod(8, 4);
+select mod(8, 3), mod(8, 4), mod(8.3, 5);
 
 -- power
 select power(2, 1), power(2, 3);
@@ -29,10 +29,10 @@ select sqrt(-2);
 select ln(exp(1)), log(exp(1)), log(10, 100);
 
 -- rounding
-select round(5.75), round(5.75, 1), round(5.75, -1);
+select round(5.75), round(5.75, 0), round(5.75, 1), round(5.75, -1);
 
 -- truncating
-select trunc(5.75, 0), trunc(5.75, 1), trunc(5.75, -1);
+select trunc(5.75), trunc(5.75, 0), trunc(5.75, 1), trunc(5.75, -1);
 
 -- check negative, zero, positive
 select sign(-2.3), sign(0), sign(42);
