@@ -1,128 +1,78 @@
--- examples on comparison operators
+-- examples on Regular Expressions
 
--- that one
-select *
-from region
-where region_id = 1;
-
-select *
-from region
-where name = 'Asia';
-
--- the other ones
-select *
-from region
-where region_id != 2;
-
--- the other ones, alternative notation
-select *
-from region
-where region_id <> 2;
-
--- strictly less than
-select *
-from region
-where region_id < 3;
-
-select *
-from region
-where name <= 'Asia';
-
--- less or equal to
-select *
-from region
-where region_id <= 3;
-
--- simple pattern matching
+-- a lowercase 'k' anywhere in a string
 select first_name, last_name
 from employee
-where last_name like '_ull%';
+where first_name ~ 'k';
 
+-- a upper/lower 'k' anywhere in a string
 select first_name, last_name
 from employee
-where last_name like 'B%';
+where first_name ~* 'k';
 
--- case insensitive pattern matching
+-- without a lowercase 'a' anywhere in a string
 select first_name, last_name
 from employee
-where last_name ilike 'b%';
+where first_name !~ 'a'
+order by 1;
 
+-- without a upper/lower 'a' anywhere in a string
 select first_name, last_name
 from employee
-where last_name like '__ll%';
+where first_name !~* 'a'
+order by 1;
 
+-- starting by 'A'
 select first_name, last_name
 from employee
-where last_name like '%ull_';
+where first_name ~ '^A';
 
-select last_name
+-- ending by 'x'
+select first_name, last_name
 from employee
-where last_name like '___';
+where first_name ~ 'x$';
 
-select last_name
+-- an 'e' in second position
+select first_name, last_name
 from employee
-where last_name ilike 'sul%';
+where first_name ~ '^.e';
 
--- interval check by BETWEEN
-select *
-from region
-where region_id between 1 and 3;
-
-select *
-from country
-where name between 'A' and 'China';
-
-select *
-from country
-where name >= 'A' and name <= 'China';
-
-select *
-from country
-where name between 'C' and 'China';
-
--- check if (not) in a set by operator IN
-select *
-from region
-where region_id not in (2, 4);
-
-select *
-from region
-where region_id in (4, 2);
-
--- case sensitive!
-select *
-from region
-where name in ('Europe', 'asia');
-
--- beware of null
-select *
-from region
-where region_id not in (2, 3, null);
-
-select *
-from region
-where name not in ('Europe', null);
-
--- can't compare a 'good' value with null
-select *
-from region
-where region_id not in (null) or region_id in (null);
-
-select *
-from region
-where region_id is not null or region_id is null;
-
--- this works fine
-select *
+-- an 'l' in the last position or immediately before
+select first_name, last_name
 from employee
-where commission in (0.10, 0.15);
+where first_name ~ 'l.?$';
 
--- this does not select anything!
-select *
+-- an 'i', at least an 's', an 'o'
+select first_name, last_name
 from employee
-where commission in (null);
+where last_name ~ 'is+o';
 
--- "is null" is the only way to check it
-select *
+-- an 'i', possibily one or more 's', an 'o'
+select first_name, last_name
 from employee
-where commission is not null;
+where last_name ~ 'is*o';
+
+-- an 'i', one or no 's', an 'o'
+select first_name, last_name
+from employee
+where last_name ~ 'is?o';
+
+-- whichever among f,w,z
+select first_name, last_name
+from employee
+where first_name ~ '[fwz]';
+
+-- whichever has at least a letter (upper/lower) not in the set
+select first_name, last_name
+from employee
+where first_name ~* '[^abcdefghijklmnoprstuvxy ]';
+
+-- whichever has at least a letter (upper/lower) not in a..z
+select first_name, last_name
+from employee
+where first_name ~* '[^a-z]';
+
+-- with a space in it
+select first_name, last_name
+from employee
+where first_name ~ '\s';

@@ -1,17 +1,16 @@
--- Minimal SQL
+-- Examples on logical operators
 
--- select all
+-- the other way round
 select *
-from service;
+from employee
+where not department_id > 2;
 
--- insert a new row
-insert into service (name) values ('Scratchaway');
+-- both conditions should hold
+select *
+from employee
+where salary < 3000 and employee_id > 160;
 
--- update a row
-update service
-set location_id = 1300
-where name = 'Scratchaway';
-
--- delete a row
-delete from service
-where name = 'Scratchaway';
+-- one or the other should hold
+select *
+from employee
+where salary < 2200 or last_name = 'King';

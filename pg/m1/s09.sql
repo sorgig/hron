@@ -1,78 +1,29 @@
--- Examples on Regular Expressions
+-- examples on order by
 
--- a lowercase 'k' anywhere in a string
-select first_name, last_name
+select *
 from employee
-where first_name ~ 'k';
+order by last_name, first_name;
 
--- a upper/lower 'k' anywhere in a string
-select first_name, last_name
+-- sorting in natural order
+select *
 from employee
-where first_name ~* 'k';
+order by salary;
 
--- without a lowercase 'a' anywhere in a string
-select first_name, last_name
+-- descending
+select first_name, last_name, salary
 from employee
-where first_name !~ 'a'
-order by 1;
+order by salary desc
+limit 3;
 
--- without a upper/lower 'a' anywhere in a string
-select first_name, last_name
+-- positional notation
+select first_name, last_name, salary
 from employee
-where first_name !~* 'a'
-order by 1;
+where first_name like 'A%'
+order by 3 desc
+limit 5;
 
--- starting by 'A'
-select first_name, last_name
+select first_name, last_name, hired
 from employee
-where first_name ~ '^A';
-
--- ending by 'x'
-select first_name, last_name
-from employee
-where first_name ~ 'x$';
-
--- an 'e' in second position
-select first_name, last_name
-from employee
-where first_name ~ '^.e';
-
--- an 'l' in the last position or immediately before
-select first_name, last_name
-from employee
-where first_name ~ 'l.?$';
-
--- an 'i', at least an 's', an 'o'
-select first_name, last_name
-from employee
-where last_name ~ 'is+o';
-
--- an 'i', possibily one or more 's', an 'o'
-select first_name, last_name
-from employee
-where last_name ~ 'is*o';
-
--- an 'i', one or no 's', an 'o'
-select first_name, last_name
-from employee
-where last_name ~ 'is?o';
-
--- whichever among f,w,z
-select first_name, last_name
-from employee
-where first_name ~ '[fwz]';
-
--- whichever has at least a letter (upper/lower) not in the set
-select first_name, last_name
-from employee
-where first_name ~* '[^abcdefghijklmnoprstuvxy ]';
-
--- whichever has at least a letter (upper/lower) not in a..z
-select first_name, last_name
-from employee
-where first_name ~* '[^a-z]';
-
--- with a space in it
-select first_name, last_name
-from employee
-where first_name ~ '\s';
+where first_name like 'A%'
+order by 3 desc
+limit 5;

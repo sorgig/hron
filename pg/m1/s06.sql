@@ -1,55 +1,34 @@
--- examples on select
+-- examples on null
 
--- select all
-select *
-from region;
-
--- a plain select
-select name
-from region
-where region_id = 1;
-
--- select a single column
-select manager_id
-from employee;
-
--- select only distinct values in a column
-select distinct manager_id
-from employee;
-
--- alias
-select title, min_salary as "original", min_salary as salary
-from job;
-
--- select with change on results
-select title, min_salary, min_salary + 200 as "option 1", min_salary + (min_salary * 0.05) as "option 2"
-from job;
-
--- 'no table' select
-select current_date;
-
-select sqrt(25);
-
-select 5/2, current_date;
-
--- concatenation by operator ||
-select region_id || ': ' || country_id as "the countries"
-from country;
-
--- concatenation by concat()
-select concat(region_id, ': ', country_id) as "the countries"
-from country;
-
-
--- limit to get result set with a specified size
-select first_name, last_name
+-- check null
+select employee_id, first_name, last_name, commission
 from employee
-limit 10;
+where commission is null
+and last_name = 'King';
 
-select first_name, last_name
+select employee_id, first_name, last_name, commission
 from employee
-offset 10 limit 10;
+where commission is not null
+and last_name = 'King';
 
-select first_name, last_name
+-- !!! WRONG !!! check null
+select employee_id, first_name, last_name, commission
 from employee
-offset 100 limit 10;
+where commission = null
+and last_name = 'King';
+
+-- !!! WRONG !!!
+select employee_id, first_name, last_name, commission
+from employee
+where commission != null
+and last_name = 'King';
+
+-- null in operations
+select first_name, last_name, salary * commission
+from employee
+where last_name = 'King';
+
+-- coalesce: if commission is null use 0 instead
+select employee_id, last_name, salary * coalesce(commission, 0)
+from employee
+where last_name = 'King';
