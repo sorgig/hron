@@ -1,0 +1,5 @@
+-- create, execute, and finally drop a procedure
+--
+-- get_avg_salary()
+--    param in: job_id
+--    param out: avg salary for employees with the given job_id
