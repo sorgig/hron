@@ -1,16 +1,17 @@
 -- this script should run on hron
 -- pre requisite: once.sql
 --
--- psql -U hron: \i setup.sql
+-- psql -U hron
+-- hron=> \i setup.sql
 
 -- cleanup
 drop table if exists car_service;
-drop table if exists service;
+drop table if exists service cascade;
 drop table if exists car;
 drop sequence if exists car_seq;
 
 alter table if exists department drop constraint if exists department_manager_fk;
-drop table if exists employee;
+drop table if exists employee cascade;
 drop table if exists department;
 drop table if exists location;
 drop table if exists country;
