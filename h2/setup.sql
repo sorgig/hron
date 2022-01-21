@@ -39,3 +39,13 @@ begin;
     insert into service (name, location_id) values ('Faith Auto Repair', 1000);
     insert into service (name, location_id) values ('Happy Brake', 2300);
 commit;
+
+CREATE ALIAS get_salary AS  $$
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.SQLException;
+@CODE
+BigDecimal getSalary(Connection connection, int id) throws SQLException {
+    return new BigDecimal(4_200);
+}
+$$;
