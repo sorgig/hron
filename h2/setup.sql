@@ -40,32 +40,33 @@ set @v_europe=1;
 set @v_americas=2;
 set @v_asia=3;
 set @v_mea=4;
-    
-insert into country (country_id, name, region_id) values ('AR', 'Argentina', @v_americas);
-insert into country (country_id, name, region_id) values ('AU', 'Australia', @v_asia);
-insert into country (country_id, name, region_id) values ('BE', 'Belgium', @v_europe);
-insert into country (country_id, name, region_id) values ('BR', 'Brazil', @v_americas);
-insert into country (country_id, name, region_id) values ('CA', 'Canada', @v_americas);
-insert into country (country_id, name, region_id) values ('CH', 'Switzerland', @v_europe);
-insert into country (country_id, name, region_id) values ('CN', 'China', @v_asia);
-insert into country (country_id, name, region_id) values ('DE', 'Germany', @v_europe);
-insert into country (country_id, name, region_id) values ('DK', 'Denmark', @v_europe);
-insert into country (country_id, name, region_id) values ('EG', 'Egypt', @v_mea);
-insert into country (country_id, name, region_id) values ('FR', 'France', @v_europe);
-insert into country (country_id, name, region_id) values ('IL', 'Israel', @v_mea);
-insert into country (country_id, name, region_id) values ('IN', 'India', @v_asia);
-insert into country (country_id, name, region_id) values ('IT', 'Italy', @v_europe);
-insert into country (country_id, name, region_id) values ('JP', 'Japan', @v_asia);
-insert into country (country_id, name, region_id) values ('KW', 'Kuwait', @v_mea);
-insert into country (country_id, name, region_id) values ('ML', 'Malaysia', @v_asia);
-insert into country (country_id, name, region_id) values ('MX', 'Mexico', @v_americas);
-insert into country (country_id, name, region_id) values ('NG', 'Nigeria', @v_mea);
-insert into country (country_id, name, region_id) values ('NL', 'Netherlands', @v_europe);
-insert into country (country_id, name, region_id) values ('SG', 'Singapore', @v_asia);
-insert into country (country_id, name, region_id) values ('UK', 'United Kingdom', @v_europe);
-insert into country (country_id, name, region_id) values ('US', 'United States of America', @v_americas);
-insert into country (country_id, name, region_id) values ('ZM', 'Zambia', @v_mea);
-insert into country (country_id, name, region_id) values ('ZW', 'Zimbabwe', @v_mea);
+
+begin;
+	insert into country (country_id, name, region_id) values ('AR', 'Argentina', @v_americas);
+	insert into country (country_id, name, region_id) values ('AU', 'Australia', @v_asia);
+	insert into country (country_id, name, region_id) values ('BE', 'Belgium', @v_europe);
+	insert into country (country_id, name, region_id) values ('BR', 'Brazil', @v_americas);
+	insert into country (country_id, name, region_id) values ('CA', 'Canada', @v_americas);
+	insert into country (country_id, name, region_id) values ('CH', 'Switzerland', @v_europe);
+	insert into country (country_id, name, region_id) values ('CN', 'China', @v_asia);
+	insert into country (country_id, name, region_id) values ('DE', 'Germany', @v_europe);
+	insert into country (country_id, name, region_id) values ('DK', 'Denmark', @v_europe);
+	insert into country (country_id, name, region_id) values ('EG', 'Egypt', @v_mea);
+	insert into country (country_id, name, region_id) values ('FR', 'France', @v_europe);
+	insert into country (country_id, name, region_id) values ('IL', 'Israel', @v_mea);
+	insert into country (country_id, name, region_id) values ('IN', 'India', @v_asia);
+	insert into country (country_id, name, region_id) values ('IT', 'Italy', @v_europe);
+	insert into country (country_id, name, region_id) values ('JP', 'Japan', @v_asia);
+	insert into country (country_id, name, region_id) values ('KW', 'Kuwait', @v_mea);
+	insert into country (country_id, name, region_id) values ('ML', 'Malaysia', @v_asia);
+	insert into country (country_id, name, region_id) values ('MX', 'Mexico', @v_americas);
+	insert into country (country_id, name, region_id) values ('NG', 'Nigeria', @v_mea);
+	insert into country (country_id, name, region_id) values ('NL', 'Netherlands', @v_europe);
+	insert into country (country_id, name, region_id) values ('SG', 'Singapore', @v_asia);
+	insert into country (country_id, name, region_id) values ('UK', 'United Kingdom', @v_europe);
+	insert into country (country_id, name, region_id) values ('US', 'United States of America', @v_americas);
+	insert into country (country_id, name, region_id) values ('ZM', 'Zambia', @v_mea);
+	insert into country (country_id, name, region_id) values ('ZW', 'Zimbabwe', @v_mea);
 commit;
 
 -- "many" location in one country
@@ -95,7 +96,7 @@ set @v_ch = 'CH';
 set @v_nl = 'NL';
 set @v_mx = 'MX';
 
-begin
+begin;
     insert into location (street_address, postal_code, city, state_province, country_id) values
         ('Via Cola di Rienzo, 1297', '00989', 'Roma', 'RM', @v_it);
     insert into location (street_address, postal_code, city, state_province, country_id) values
@@ -146,7 +147,7 @@ commit;
 
 -- "one" job to many employees
 create table job (
-	job_id serial primary key,
+	job_id identity primary key,
 	title varchar(35) not null,
 	min_salary integer,
 	max_salary integer,
@@ -176,9 +177,471 @@ begin;
     insert into job (title, min_salary, max_salary) values ('Public Relations Representative', 4500, 10500);
 commit;
 
+-- a table with a complicated relation with employee, and in the role "many" to one location
+create table department (
+	department_id serial primary key,
+	name varchar(30) not null,
+	manager_id integer,
+	location_id integer,
+
+	constraint department_location_fk foreign key (location_id) references location(location_id)
+);
+
+set @v_sewa = 8;
+set @v_sltx = 5;
+set @v_toon = 9;
+set @v_lond = 15;
+set @v_sfca = 6;
+set @v_muba = 18;
+set @v_oxfr = 16;
+
+begin;
+    insert into department (name, location_id) values ('Administration', @v_sewa);
+    insert into department (name, location_id) values ('Marketing', @v_toon);
+    insert into department (name, location_id) values ('Purchasing', @v_sewa);
+    insert into department (name, location_id) values ('Human Resources', @v_lond);
+    insert into department (name, location_id) values ('Shipping', @v_sfca);
+    insert into department (name, location_id) values ('IT', @v_sltx);
+    insert into department (name, location_id) values ('Public Relations', @v_muba);
+    insert into department (name, location_id) values ('Sales', @v_oxfr);
+    insert into department (name, location_id) values ('Executive', @v_sewa);
+    insert into department (name, location_id) values ('Finance', @v_sewa);
+    insert into department (name, location_id) values ('Accounting', @v_sewa);
+
+    -- other departements, not used
+    insert into department (name) values ('Treasury');
+    insert into department (name) values ('Benefits');
+    insert into department (name) values ('Manufacturing');
+    insert into department (name) values ('Contracting');
+    insert into department (name) values ('Operations');
+    insert into department (name) values ('IT Support');
+    insert into department (name) values ('IT Helpdesk');
+    insert into department (name) values ('Recruiting');
+commit;
+
+-- the core table, with many relations (also a self - manager)
+create table employee (
+	employee_id identity primary key,
+	first_name varchar(20),
+	last_name varchar(25) not null,
+	phone integer unique not null,
+	hired date not null,
+	job_id integer not null,
+	salary numeric(8,2),
+	commission numeric(2,2),
+	manager_id integer,
+	department_id integer,
+
+	constraint employee_salary_ck check (salary > 0),
+	constraint employee_job_fk foreign key (job_id) references job (job_id),
+	constraint employee_department_fk foreign key (department_id) references department (department_id)
+);
+
+set @v_pres = 1;
+set @v_vprs = 2;
+set @v_asst = 3;
+set @v_fimg = 4;
+set @v_prog = 15;
+set @v_acct = 5;
+set @v_pumg = 10;
+set @v_puck = 11;
+set @v_stmg = 12;
+set @v_stck = 13;
+set @v_samg = 8;
+set @v_sarp = 9;
+set @v_shck = 14;
+set @v_mkmg = 16;
+set @v_mkrp = 17;
+set @v_hrrp = 18;
+set @v_prrp = 19;
+set @v_acmg = 6;
+set @v_puac = 7;
+
+begin;
+    -- employees with no commission
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Steven', 'King', 4511, '2016-06-17', @v_pres, 24000);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Neena', 'Kochhar', 4568, '2014-09-21', @v_vprs, 17000);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Lex', 'De Haan', 4518, '2014-01-13', @v_vprs, 17000);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Alexander', 'Hunold', 4567, '2019-01-06', @v_prog, 9000);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Bruce', 'Ernst', 4268, '2021-05-21', @v_prog, 6000);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('David', 'Austin', 4571, '2018-06-25', @v_prog, 4800);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Valli', 'Pataballa', 4560, '2019-02-05', @v_prog, 4800);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Diana', 'Lorentz', 5567, '2020-02-07', @v_prog, 4200);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Nancy', 'Greenberg', 4569, '2015-08-17', @v_fimg, 12008);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Daniel', 'Faviet', 4169, '2015-08-16', @v_acct, 9000);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('John', 'Chen', 4269, '2018-09-28', @v_acct, 8200);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Ismael', 'Sciarra', 4369, '2018-09-05', @v_acct, 7700);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Jose Manuel', 'Urman', 4469, '2019-03-07', @v_acct, 7800);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Luis', 'Popp', 4597, '2020-12-07', @v_acct, 6900);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Den', 'Raphaely', 4561, '2020-12-02', @v_pumg, 11000);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Alexander', 'Khoo', 4562, '2021-05-03', @v_puck, 3100);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Shelli', 'Baida', 4563, '2018-12-24', @v_puck, 2900);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Sigal', 'Tobias', 4564, '2018-07-24', @v_puck, 2800);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Guy', 'Himuro', 4565, '2019-11-15', @v_puck, 2600);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Karen', 'Colmenares', 4566, '2021-08-07', @v_puck, 2500);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Matthew', 'Weiss', 4330, '2017-07-18', @v_stmg, 8000);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Adam', 'Fripp', 2234, '2018-04-10', @v_stmg, 8200);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Payam', 'Kaufling', 3234, '2016-05-01', @v_stmg, 7900);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Shanta', 'Vollman', 4234, '2018-10-10', @v_stmg, 6500);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Kevin', 'Mourgos', 4244, '2020-11-16', @v_stmg, 5800);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Julia', 'Nayer', 4214, '2018-07-16', @v_stck, 3200);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Irene', 'Mikkilineni', 4224, '2019-09-06', @v_stck, 2700);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('James', 'Landry', 4334, '2020-01-14', @v_stck, 2400);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Steven', 'Markle', 4434, '2021-03-08', @v_stck, 2200);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Laura', 'Bissot', 5234, '2018-08-20', @v_stck, 3300);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Mozhe', 'Atkinson', 6234, '2018-10-30',@v_stck, 2800);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('James', 'Marlow', 7234, '2018-02-16', @v_stck, 2500);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('TJ', 'Olson', 8234, '2020-04-10', @v_stck, 2100);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Jason', 'Mallin', 1934, '2017-06-14', @v_stck, 3300);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Michael', 'Rogers', 4834, '2019-08-26', @v_stck, 2900);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Ki', 'Gee', 4734, '2020-12-12', @v_stck, 2400);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Hazel', 'Philtanker', 4634, '2021-02-06', @v_stck, 2200);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Renske', 'Ladwig', 4233, '2016-07-14', @v_stck, 3600);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Stephen', 'Stiles', 4034, '2018-10-26', @v_stck, 3200);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('John', 'Scantamburlo', 4019, '2019-02-12', @v_stck, 2700);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Joshua', 'Patel', 4824, '2019-04-06', @v_stck, 2500);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Trenna', 'Rajs', 4009, '2016-10-17', @v_stck, 3500);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Curtis', 'Davies', 4994, '2018-01-29', @v_stck, 3100);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Randall', 'Matos', 4874, '2019-03-15', @v_stck, 2600);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Peter', 'Vargas', 4004, '2019-07-09', @v_stck, 2500);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Winston', 'Taylor', 4276, '2019-01-24', @v_shck, 3200);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Jean', 'Fleaur', 4277, '2019-02-23', @v_shck, 3100);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Martha', 'Sullivan', 4878, '2020-06-21', @v_shck, 2500);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Girard', 'Geoni', 4879, '2021-02-03', @v_shck, 2800);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Nandita', 'Sarchand', 4816, '2017-01-27', @v_shck, 4200);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Alexis', 'Bull', 4846, '2018-02-20', @v_shck, 4100);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Juliet', 'Dullinger', 4256, '2019-06-24', @v_shck, 3400);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Anthony', 'Cabrio', 4271, '2020-02-07', @v_shck, 3000);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Kelly', 'Chung', 4376, '2018-06-14', @v_shck, 3800);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Jennifer', 'Dilly', 4872, '2018-08-13', @v_shck, 3600);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Tim', 'Gates', 4871, '2019-07-11', @v_shck, 2900);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Randall', 'Perkins', 4576, '2020-12-19', @v_shck, 2500);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Sarah', 'Bell', 4261, '2017-02-04', @v_shck, 4000);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Britney', 'Everett', 4226, '2015-03-03', @v_shck, 3900);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Samuel', 'McCain', 4218, '2016-07-01', @v_shck, 3200);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Vance', 'Jones', 4275, '2017-03-17', @v_shck, 2800);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Alana', 'Walsh', 4211, '2019-04-24', @v_shck, 3100);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Kevin', 'Feeney', 4222, '2019-05-23', @v_shck, 3000);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Donald', 'OConnell', 4231, '2020-06-21', @v_shck, 2600);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Douglas', 'Grant', 4240, '2021-01-13', @v_shck, 2600);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Jennifer', 'Whalen', 4241, '2016-09-17', @v_asst, 4400);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Michael', 'Hartstein', 4255, '2017-02-17', @v_mkmg, 13000);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Pat', 'Fay', 4259, '2018-08-17', @v_mkrp, 6000);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Susan', 'Mavris', 4215, '2015-06-07', @v_hrrp, 6500);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Hermann', 'Baer', 4288, '2015-06-07', @v_prrp, 10000);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Shelley', 'Higgins', 4280, '2015-06-07', @v_acmg, 12008);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary) values
+        ('Willy', 'Gietz', 4281, '2015-06-07', @v_puac, 8300);
+    
+    -- sales have commission
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('John', 'Russell', 9200, '2017-10-01', @v_samg, 14000, 0.35);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Karen', 'Partners', 9261, '2018-01-05', @v_samg, 13500, 0.25);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Alberto', 'Errazuriz', 9218, '2018-03-10', @v_samg, 12000, 0.25);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Gerald', 'Cambrault', 9211, '2020-10-15', @v_samg, 11000, 0.25);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Eleni', 'Zlotkey', 9018, '2018-01-29', @v_samg, 10500, 0.15);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Peter', 'Tucker', 9299, '2021-01-30', @v_sarp, 10000, 0.25);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('David', 'Bernstein', 5268, '2018-03-24', @v_sarp, 9500, 0.20);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Peter', 'Hall', 8968, '2018-08-20', @v_sarp, 9000, 0.20);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Christopher', 'Olsen', 9718, '2019-03-30', @v_sarp, 8000, 0.15);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Nanette', 'Cambrault', 9768, '2019-12-09', @v_sarp, 7500, 0.15);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Oliver', 'Tuvault', 9508, '2020-11-23', @v_sarp, 7000, 0.10);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Jane', 'King', 9228, '2017-01-30', @v_sarp, 10000, 0.30);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Patrick', 'Sully', 9252, '2017-03-04', @v_sarp, 9500, 0.30);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Allan', 'McEwen', 9222, '2017-08-01', @v_sarp, 9000, 0.30);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Lindsey', 'Smith', 9221, '2018-03-10', @v_sarp, 8000, 0.25);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Louise', 'Doran', 9225, '2018-12-15', @v_sarp, 7500, 0.25);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Sarath', 'Sewall', 9212, '2019-11-03', @v_sarp, 7000, 0.20);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Clara', 'Vishney', 9288, '2018-11-11', @v_sarp, 10500, 0.20);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Danielle', 'Greene', 9213, '2020-03-19', @v_sarp, 9500, 0.10);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Mattea', 'Marvins', 9256, '2021-01-24', @v_sarp, 7200, 0.05);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('David', 'Lee', 9219, '2021-02-23', @v_sarp, 6800, 0.05);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Sundar', 'Ande', 9201, '2021-03-24', @v_sarp, 6400, 0.05);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Amit', 'Banda', 9208, '2021-04-21', @v_sarp, 6200, 0.05);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Lisa', 'Ozer', 9229, '2018-03-11', @v_sarp, 11500, 0.20);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Harrison', 'Bloom', 9286, '2019-03-23', @v_sarp, 10000, 0.15);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Tayler', 'Fox', 9298, '2019-01-24', @v_sarp, 9600, 0.15);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('William', 'Smith', 9255, '2020-02-23', @v_sarp, 7400, 0.10);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Elizabeth', 'Bates', 9233, '2020-03-24', @v_sarp, 7300, 0.10);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Sundita', 'Kumar', 9268, '2021-04-21', @v_sarp, 6100, 0.05);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Ellen', 'Abel', 9267, '2017-05-11', @v_sarp, 11000, 0.25);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Alyssa', 'Hutton', 9266, '2018-03-19', @v_sarp, 8800, 0.20);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Jonathon', 'Taylor', 9265, '2019-03-24', @v_sarp, 8600, 0.15);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Jack', 'Livingston', 2926, '2019-04-23', @v_sarp, 8400, 0.15);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Kimberely', 'Grant', 9263, '2020-05-24', @v_sarp, 7000, 0.10);
+    insert into employee (first_name, last_name, phone, hired, job_id, salary, commission) values
+        ('Charles', 'Johnson', 9262, '2021-01-04', @v_sarp, 6200, 0.05);    
+commit;
+
+alter table department add constraint department_manager_fk foreign key (manager_id) references employee (employee_id);
+alter table employee add constraint employee_manager_fk foreign key (manager_id) references employee (employee_id);
+
+begin;
+	update employee
+	set department_id = ( select department_id from department where name =  'Accounting' )
+	where job_id = ( select job_id from job where title = 'Public Accountant' );
+
+	update employee
+	set department_id = ( select department_id from department where name =  'Accounting' )
+	where job_id = ( select job_id from job where title = 'Accounting Manager' );
+
+	update employee
+	set department_id = ( select department_id from department where name =  'Administration' )
+	where job_id = ( select job_id from job where title = 'Assistant' );
+
+	update employee
+	set department_id = ( select department_id from department where name =  'Executive' )
+	where job_id = ( select job_id from job where title = 'President' );
+
+	update employee
+	set department_id = ( select department_id from department where name =  'Executive' )
+	where job_id = ( select job_id from job where title = 'Vice President' );
+
+	update employee
+	set department_id = ( select department_id from department where name =  'Finance' )
+	where job_id = ( select job_id from job where title = 'Finance Manager' );
+
+	update employee
+	set department_id = ( select department_id from department where name =  'Finance' )
+	where job_id = ( select job_id from job where title = 'Accountant' );
+
+	update employee
+	set department_id = ( select department_id from department where name =  'Human Resources' )
+	where job_id = ( select job_id from job where title = 'Human Resources Representative' );
+
+	update employee
+	set department_id = ( select department_id from department where name =  'IT' )
+	where job_id = ( select job_id from job where title = 'Programmer' );
+
+	update employee
+	set department_id = ( select department_id from department where name =  'Marketing' )
+	where job_id = ( select job_id from job where title = 'Marketing Manager' );
+
+	update employee
+	set department_id = ( select department_id from department where name =  'Marketing' )
+	where job_id = ( select job_id from job where title = 'Marketing Representative' );
+
+	update employee
+	set department_id = ( select department_id from department where name =  'Public Relations' )
+	where job_id = ( select job_id from job where title = 'Public Relations Representative' );
+
+	update employee
+	set department_id = ( select department_id from department where name =  'Purchasing' )
+	where job_id = ( select job_id from job where title = 'Purchasing Manager' );
+
+	update employee
+	set department_id = ( select department_id from department where name =  'Purchasing' )
+	where job_id = ( select job_id from job where title = 'Purchasing Clerk' );
+
+	update employee
+	set department_id = ( select department_id from department where name =  'Sales' )
+	where job_id = ( select job_id from job where title = 'Sales Manager' );
+
+	update employee
+	set department_id = ( select department_id from department where name =  'Sales' )
+	where job_id = ( select job_id from job where title = 'Sales Representative' and first_name != 'Kimberely');
+
+	update employee
+	set department_id = ( select department_id from department where name =  'Shipping' )
+	where job_id = ( select job_id from job where title = 'Shipping Clerk');
+
+	update employee
+	set department_id = ( select department_id from department where name =  'Shipping' )
+	where job_id = ( select job_id from job where title = 'Stock Clerk');
+
+	update employee
+	set department_id = ( select department_id from department where name =  'Shipping' )
+	where job_id = ( select job_id from job where title = 'Stock Manager');
+commit;
+
+-- set the manager FK (self)
+begin;
+    update employee
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Steven' and last_name = 'King' )
+    where job_id in ( select job_id from job where title in ('Vice President', 'Purchasing Manager', 'Stock Manager', 'Sales Manager', 'Marketing Manager') );
+
+    update employee
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Alexander' and last_name = 'Hunold' )
+    where job_id = ( select job_id from job where title = 'Programmer' );
+
+    update employee
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Nancy' and last_name = 'Greenberg' )
+    where job_id = ( select job_id from job where title = 'Accountant' );
+
+    update employee
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Shelley' and last_name = 'Higgins' )
+    where job_id = ( select job_id from job where title = 'Public Accountant' );
+
+    update employee
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Michael' and last_name = 'Hartstein' )
+    where job_id = ( select job_id from job where title = 'Marketing Representative' );
+
+    update employee
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Den' and last_name = 'Raphaely' )
+    where job_id = ( select job_id from job where title = 'Purchasing Clerk' );
+
+	--
+    update employee
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Lex' and last_name = 'De Haan' )
+    where first_name = 'Alexander' and last_name = 'Hunold';
+
+	update employee
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Neena' and last_name = 'Kochhar' )
+    where (first_name = 'Nancy' and last_name = 'Greenberg') or
+        (first_name = 'Shelley' and last_name = 'Higgins') or
+        (first_name = 'Jennifer' and last_name = 'Whalen') or
+        (first_name = 'Susan' and last_name = 'Mavris') or
+        (first_name = 'Hermann' and last_name = 'Baer');
+
+    update employee
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name =  'John' and last_name = 'Russell' )
+    where (first_name = 'Peter' and last_name = 'Tucker') or
+        (first_name = 'David' and last_name = 'Bernstein') or
+        (first_name = 'Peter' and last_name = 'Hall') or
+        (first_name = 'Christopher' and last_name = 'Olsen') or
+        (first_name = 'Nanette' and last_name = 'Cambrault') or
+        (first_name = 'Oliver' and last_name = 'Tuvault');
+
+
+	
+commit;
+
+
+
 -- "many" services taking cares of many cars, many services could share one location
 create table service(
-    service_id serial primary key,
+    service_id identity primary key,
     name varchar(40),
     location_id integer
 
