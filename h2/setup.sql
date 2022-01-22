@@ -625,7 +625,7 @@ begin;
     set manager_id = (
         select employee_id
         from employee
-        where first_name =  'John' and last_name = 'Russell' )
+        where first_name = 'John' and last_name = 'Russell' )
     where (first_name = 'Peter' and last_name = 'Tucker') or
         (first_name = 'David' and last_name = 'Bernstein') or
         (first_name = 'Peter' and last_name = 'Hall') or
@@ -633,26 +633,335 @@ begin;
         (first_name = 'Nanette' and last_name = 'Cambrault') or
         (first_name = 'Oliver' and last_name = 'Tuvault');
 
+    update employee
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Karen' and last_name = 'Partners' )
+    where (first_name = 'Jane' and last_name = 'King') or
+        (first_name = 'Patrick' and last_name = 'Sully') or
+        (first_name = 'Allan' and last_name = 'McEwen') or
+        (first_name = 'Lindsey' and last_name = 'Smith') or
+        (first_name = 'Louise' and last_name = 'Doran') or
+        (first_name = 'Sarath' and last_name = 'Sewall');
 
-	
+    update employee
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Alberto' and last_name = 'Errazuriz' )
+    where (first_name = 'Clara' and last_name = 'Vishney') or
+        (first_name = 'Danielle' and last_name = 'Greene') or
+        (first_name = 'Mattea' and last_name = 'Marvins') or
+        (first_name = 'David' and last_name = 'Lee') or
+        (first_name = 'Sundar' and last_name = 'Ande') or
+        (first_name = 'Amit' and last_name = 'Banda');
+
+    update employee
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Gerald' and last_name = 'Cambrault' )
+    where (first_name = 'Lisa' and last_name = 'Ozer') or
+        (first_name = 'Harrison' and last_name = 'Bloom') or
+        (first_name = 'Tayler' and last_name = 'Fox') or
+        (first_name = 'William' and last_name = 'Smith') or
+        (first_name = 'Elizabeth' and last_name = 'Bates') or
+        (first_name = 'Sundita' and last_name = 'Kumar');
+
+    update employee
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Eleni' and last_name = 'Zlotkey' )
+    where (first_name = 'Ellen' and last_name = 'Abel') or
+        (first_name = 'Alyssa' and last_name = 'Hutton') or
+        (first_name = 'Jonathon' and last_name = 'Taylor') or
+        (first_name = 'Jack' and last_name = 'Livingston') or
+        (first_name = 'Kimberely' and last_name = 'Grant') or
+        (first_name = 'Charles' and last_name = 'Johnson');
+
+    update employee
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Matthew' and last_name = 'Weiss' )
+    where (first_name = 'Julia' and last_name = 'Nayer') or
+        (first_name = 'Irene' and last_name = 'Mikkilineni') or
+        (first_name = 'James' and last_name = 'Landry') or
+        (first_name = 'Steven' and last_name = 'Markle') or
+        (first_name = 'Winston' and last_name = 'Taylor') or
+        (first_name = 'Jean' and last_name = 'Fleaur') or
+        (first_name = 'Martha' and last_name = 'Sullivan') or
+        (first_name = 'Girard' and last_name = 'Geoni');
+
+    update employee
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Adam' and last_name = 'Fripp' )
+    where (first_name = 'Laura' and last_name = 'Bissot') or
+        (first_name = 'Mozhe' and last_name = 'Atkinson') or
+        (first_name = 'James' and last_name = 'Marlow') or
+        (first_name = 'TJ' and last_name = 'Olson') or
+        (first_name = 'Nandita' and last_name = 'Sarchand') or
+        (first_name = 'Alexis' and last_name = 'Bull') or
+        (first_name = 'Juliet' and last_name = 'Dullinger') or
+        (first_name = 'Anthony' and last_name = 'Cabrio');
+
+    update employee
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Payam' and last_name = 'Kaufling' )
+    where (first_name = 'Jason' and last_name = 'Mallin') or
+        (first_name = 'Michael' and last_name = 'Rogers') or
+        (first_name = 'Ki' and last_name = 'Gee') or
+        (first_name = 'Hazel' and last_name = 'Philtanker') or
+        (first_name = 'Kelly' and last_name = 'Chung') or
+        (first_name = 'Jennifer' and last_name = 'Dilly') or
+        (first_name = 'Tim' and last_name = 'Gates') or
+        (first_name = 'Randall' and last_name = 'Perkins');
+
+    update employee
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Shanta' and last_name = 'Vollman' )
+    where (first_name = 'Renske' and last_name = 'Ladwig') or
+        (first_name = 'Stephen' and last_name = 'Stiles') or
+        (first_name = 'John' and last_name = 'Scantamburlo') or
+        (first_name = 'Joshua' and last_name = 'Patel') or
+        (first_name = 'Sarah' and last_name = 'Bell') or
+        (first_name = 'Britney' and last_name = 'Everett') or
+        (first_name = 'Samuel' and last_name = 'McCain') or
+        (first_name = 'Vance' and last_name = 'Jones');
+
+    update employee
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Kevin' and last_name = 'Mourgos' )
+    where (first_name = 'Trenna' and last_name = 'Rajs') or
+        (first_name = 'Curtis' and last_name = 'Davies') or
+        (first_name = 'Randall' and last_name = 'Matos') or
+        (first_name = 'Peter' and last_name = 'Vargas') or
+        (first_name = 'Alana' and last_name = 'Walsh') or
+        (first_name = 'Kevin' and last_name = 'Feeney') or
+        (first_name = 'Donald' and last_name = 'OConnell') or
+        (first_name = 'Douglas' and last_name = 'Grant');	
 commit;
 
+-- set manager FK on department table
+begin;
+    update department
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Jennifer' and last_name = 'Whalen' )
+    where name = 'Administration';
 
+    update department
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Michael' and last_name = 'Hartstein' )
+    where name = 'Marketing';
+
+    update department
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Den' and last_name = 'Raphaely' )
+    where name = 'Purchasing';
+
+    update department
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Susan' and last_name = 'Mavris' )
+    where name = 'Human Resources';
+
+    update department
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Adam' and last_name = 'Fripp' )
+    where name = 'Shipping';
+
+    update department
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Alexander' and last_name = 'Hunold' )
+    where name = 'IT';
+
+    update department
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Hermann' and last_name = 'Baer' )
+    where name = 'Public Relations';
+
+    update department
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'John' and last_name = 'Russell' )
+    where name = 'Sales';
+
+    update department
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Steven' and last_name = 'King' )
+    where name = 'Executive';
+
+    update department
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Nancy' and last_name = 'Greenberg' )
+    where name = 'Finance';
+
+    update department
+    set manager_id = (
+        select employee_id
+        from employee
+        where first_name = 'Shelley' and last_name = 'Higgins' )
+    where name = 'Accounting';
+commit;
+
+-- "one" car for one employee, "many" cars seviced by many services
+create table car(
+    car_id integer primary key,
+    name varchar(40) unique,
+    employee_id integer unique,
+
+    constraint car_employee_fk foreign key (employee_id) references employee (employee_id)
+);
+
+create sequence car_seq;
+
+begin;
+    insert into car (car_id, name, employee_id) values
+        (nextval('car_seq'), 'Silver Hornet', (
+			select employee_id
+			from employee
+			where first_name = 'Jennifer' and last_name = 'Whalen'));
+
+    insert into car (car_id, name, employee_id) values
+        (nextval('car_seq'), 'White Phantom', (
+			select employee_id
+			from employee
+			where first_name = 'Michael' and last_name = 'Hartstein'));
+
+    insert into car (car_id, name, employee_id) values
+        (nextval('car_seq'), 'Batmobile', (
+			select employee_id
+			from employee
+			where first_name = 'Den' and last_name = 'Raphaely'));
+
+    insert into car (car_id, name, employee_id) values
+        (nextval('car_seq'), 'Starsky', (
+			select employee_id
+			from employee
+			where first_name = 'Susan' and last_name = 'Mavris'));
+
+    insert into car (car_id, name, employee_id) values
+        (nextval('car_seq'), 'Smurf', (
+			select employee_id
+			from employee
+			where first_name = 'Adam' and last_name = 'Fripp'));
+
+    insert into car (car_id, name, employee_id) values
+        (nextval('car_seq'), 'Fireball', (
+			select employee_id
+			from employee
+			where first_name = 'Alexander' and last_name = 'Hunold'));
+
+    insert into car (car_id, name, employee_id) values
+        (nextval('car_seq'), 'Poison', (
+			select employee_id
+			from employee
+			where first_name = 'Neena' and last_name = 'Kochhar'));
+
+    insert into car (car_id, name, employee_id) values
+        (nextval('car_seq'), 'Katana', (
+			select employee_id
+			from employee
+			where first_name = 'Lex' and last_name = 'De Haan'));
+
+    insert into car (car_id, name, employee_id) values
+        (nextval('car_seq'), 'Titanic', (
+			select employee_id
+			from employee
+			where first_name = 'Hermann' and last_name = 'Baer'));
+
+    insert into car (car_id, name, employee_id) values
+        (nextval('car_seq'), 'Dracula', (
+			select employee_id
+			from employee
+			where first_name = 'John' and last_name = 'Russell'));
+
+    insert into car (car_id, name, employee_id) values
+        (nextval('car_seq'), 'Zeppelin', (
+			select employee_id
+			from employee
+			where first_name = 'Steven' and last_name = 'King'));
+
+    insert into car (car_id, name, employee_id) values
+        (nextval('car_seq'), 'Ruby', (
+			select employee_id
+			from employee
+			where first_name = 'Nancy' and last_name = 'Greenberg'));
+
+    insert into car (car_id, name, employee_id) values
+        (nextval('car_seq'), 'Tortoise', (
+			select employee_id
+			from employee
+			where first_name = 'Shelley' and last_name = 'Higgins'));
+commit;
 
 -- "many" services taking cares of many cars, many services could share one location
 create table service(
     service_id identity primary key,
     name varchar(40),
-    location_id integer
-
---    , constraint service_location_fk foreign key (location_id) references location (location_id)
+    location_id integer,
+	
+	constraint service_location_fk foreign key (location_id) references location (location_id)
 );
 
 begin;
-    insert into service (name, location_id) values ('Inspired Glass', 1000);
-    insert into service (name, location_id) values ('Faith Auto Repair', 1000);
-    insert into service (name, location_id) values ('Happy Brake', 2300);
+    insert into service (name, location_id) values ('Inspired Glass', 1);
+    insert into service (name, location_id) values ('Faith Auto Repair', 1);
+    insert into service (name, location_id) values ('Happy Brake', 14);
 commit;
+
+-- many to many with details
+create table car_service(
+    car_id integer,
+    service_id integer,
+    checkin timestamp,
+    checkout timestamp,
+
+    constraint car_service_time_ck check (checkin < checkout),
+    primary key (car_id, service_id, checkin),
+    constraint car_service_car_fk foreign key (car_id) references car (car_id),
+    constraint car_service_service_fk foreign key (service_id) references service (service_id)
+);
+
+begin;
+    insert into car_service (car_id, service_id, checkin, checkout) values
+        (1, 1, '2021-08-01 15:00:00', '2021-08-01 16:00:00');
+    insert into car_service (car_id, service_id, checkin, checkout) values
+        (5, 2, '2021-08-03 14:00:00', '2021-08-03 19:00:00');
+    insert into car_service (car_id, service_id, checkin, checkout) values
+        (1, 2, '2021-08-04 08:00:00', '2021-08-04 20:00:00');
+    insert into car_service (car_id, service_id, checkin, checkout) values
+        (1, 3, '2021-10-12 15:00:00', '2021-10-12 18:00:00');
+commit;
+
 
 CREATE ALIAS get_salary AS  $$
 import java.math.BigDecimal;
@@ -660,6 +969,14 @@ import java.sql.Connection;
 import java.sql.SQLException;
 @CODE
 BigDecimal getSalary(Connection connection, int id) throws SQLException {
+/*
+    select salary
+    into v_salary
+    from employee
+    where employee_id = p_employee_id;
+
+    return v_salary;
+ */
     return new BigDecimal(4_200);
 }
 $$;
