@@ -27,3 +27,10 @@ from employee
 where first_name like 'A%'
 order by 3 desc
 limit 5;
+
+-- column alias in order by 
+select first_name || ' ' || last_name as name, hired
+from employee
+where first_name like 'A%'
+order by name
+limit 5;

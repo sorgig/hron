@@ -47,4 +47,4 @@ offset 10 limit 10;
 
 select first_name, last_name
 from employee
-offset 100 limit 10;
+limit 10 offset 100;
