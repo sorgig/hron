@@ -1,7 +1,7 @@
 -- this script should run on hron
 -- pre requisite: once.sql
 --
--- psql -U hron
+-- psql -U hron -d postgres
 -- hron=> \i setup.sql
 
 -- cleanup
