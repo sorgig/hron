@@ -8,7 +8,7 @@ from region;
 -- 3|Asia
 -- 4|Middle East and Africa
 
-	select region_id as r_id, 'Europe' as "region name", country_id, name as country
+	select region_id as r_id, 'Europe' as region, country_id, name
 	from country
 	where region_id = 1
 union
@@ -20,7 +20,7 @@ union
 	from country
 	where region_id = 3
 union
-	select region_id as r_id, 'Middle East and Africa', country_id, name as country
+	select region_id as r_id, 'Middle East and Africa', country_id, name
 	from country
 	where region_id = 4
-order by 1, 4;
+order by r_id, name;

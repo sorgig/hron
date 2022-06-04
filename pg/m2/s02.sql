@@ -10,31 +10,31 @@ from region;
 -- 3|Asia
 -- 4|Middle East and Africa
 
-select region_id as r_id, 'Europe' as "region name", country_id, name as country
+select region_id as r_id, 'Europe' as region, country_id, name
 from country
 where region_id = 1;
 
-select region_id as r_id, 'Americas' as "region name", country_id, name
+select region_id as r_id, 'Americas' as region, country_id, name
 from country
 where region_id = 2;
 
-select region_id as r_id, 'Asia' as "region name", country_id, name
+select region_id as r_id, 'Asia' as region, country_id, name
 from country
 where region_id = 3;
 
-select region_id as r_id, 'Middle East and Africa' as "region name", country_id, name as country
+select region_id as r_id, 'Middle East and Africa' as region, country_id, name
 from country
 where region_id = 4
-order by 1, 4;
+order by name;
 
 -- join the two tables and see the full result in a single shot
-select region.region_id as r_id, region.name as "region name", country_id, country.name as country
+select region.region_id as r_id, region.name as "region name", country.country_id, country.name
 from region, country
 where region.region_id = country.region_id
-order by 1, 4;
+order by r_id, country.name;
 
 -- table alias
-select r.region_id as r_id, r.name as "region name", country_id, c.name as country
+select r.region_id as r_id, r.name as region, c.country_id, c.name
 from region r, country c
 where r.region_id = c.region_id
-order by 1, 4;
+order by r_id, c.name;

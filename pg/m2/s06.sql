@@ -7,7 +7,7 @@ where last_name like 'Gr%';
 
 -- the inner join skips Kimberely
 select first_name, last_name, name as department
-from employee join department
+from employee inner join department
 using (department_id)
 where last_name like 'Gr%';
 
