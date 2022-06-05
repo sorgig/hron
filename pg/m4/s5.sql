@@ -2,7 +2,7 @@
 
 -- most common subquery: select - where
 
--- employees in department 'IT' (slightly unsafe, it could be a duplicated name ...)
+-- employees in department 'IT' (slightly unsafe, departments could have duplicated names)
 select concat(first_name, ' ', last_name)
 from employee
 where department_id = (

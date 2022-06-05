@@ -4,26 +4,27 @@
 select department_id, job_id
 from employee
 group by department_id, job_id
-order by 1;
+order by department_id;
 
 -- average salary for all the employees
-select round(avg(salary), 2) as "avg salary"
-from employee
-order by 1 desc;
+select round(avg(salary), 2) as avg_sal
+from employee;
 
 -- average salary for each department
-select department_id, round(avg(salary)) as "avg salary"
+select department_id, round(avg(salary)) as avg_sal
 from employee
 group by department_id
-order by 2 desc;
+order by avg_sal desc;
 
 -- average salary for each department, excluding the employees not assigned to a department
-select department_id, round(avg(salary)) as "avg salary"
+select department_id, round(avg(salary)) as avg_sal
 from employee
+where department_id is not null
 group by department_id
-order by 2 desc;
+order by avg_sal desc;
 
-select d.name, round(avg(e.salary)) as "avg salary"
+-- average salary for latest hired employees grouped by department
+select d.name, round(avg(e.salary)) as avg_sal
 from employee e join department d using (department_id)
 where hired >= '2020-01-01'
 group by d.name;
