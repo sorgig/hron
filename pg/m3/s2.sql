@@ -17,7 +17,7 @@ select position('ba' in 'crab' ) as "not found", position('ra' in 'crab' ) as po
 select length('name');
 
 -- char and its representation
-select ascii('A') as "A is 65", chr(90) as "90 is Z";
+select ascii('A') as "A is 65", chr(122) as "122 is z";
 
 -- left and right padding
 select lpad('tom', 30, '.') tom, rpad('tim', 30, '_- -_') tim;

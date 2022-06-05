@@ -37,8 +37,8 @@ select trunc(5.75), trunc(5.75, 0), trunc(5.75, 1), trunc(5.75, -1);
 -- check negative, zero, positive
 select sign(-2.3), sign(0), sign(42);
 
--- 3.14
+-- 3.14...
 select pi();
 
--- sine(), cosine(), tangent(), ...
+-- trigonometry
 select sin(pi()/2), cos(0), tan(pi()/4);
