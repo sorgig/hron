@@ -11,18 +11,13 @@ where service_id = 12;
 
 -- updating all rows - by mistake?
 -- ??? committing ???
-begin;
-    update service
-    set name = 'mistake?';
-rollback;
+update service
+set name = 'mistake?';
 
 -- updating (potentially) more rows
-begin;
-    update service
-    set name = 'N/A!'
-    where service_id > 10;
-rollback;
-
+update service
+set name = 'N/A!'
+where service_id > 10;
 
 -- check the current salary for IT people
 select e.first_name, e.last_name, e.salary
@@ -31,11 +26,9 @@ where d.name = 'IT';
 
 -- update - where subquery
 -- assuming department name is not duplicated!
-begin;
-    update employee
-    set salary = salary + 100
-    where employee_id = (
-    	select manager_id
-    	from department
-    	where name = 'IT');
-rollback;
+update employee
+set salary = salary + 100
+where manager_id = (
+	select manager_id
+	from department
+	where name = 'IT');

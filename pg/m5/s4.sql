@@ -13,5 +13,6 @@ delete from service
 where service_id > 3;
 
 -- even more careful here!
--- !!! another table references some of these rows, so the operation won't succeed !!!
+-- !!! here another table references some of these rows !!!
+-- !!! the operation won't succeed on them !!!
 delete from service;
