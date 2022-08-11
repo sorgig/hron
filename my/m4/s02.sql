@@ -6,7 +6,7 @@ select count(*), count(manager_id), count(distinct manager_id), count(commission
 from employee;
 
 -- max, min
-select max(salary), min(salary)
+select max(salary), min(salary), max(salary) - min(salary)
 from employee;
 
 -- min, max on dates
@@ -21,4 +21,4 @@ where department_id = 5;
 -- average
 select round(avg(salary), 2)
 from employee
-where department_id = 5;
+where department_id = 1;

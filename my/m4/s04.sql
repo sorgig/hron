@@ -20,16 +20,16 @@ having avg(salary) > 6000
 order by 2 desc;
 
 -- average salary for department, excluding "null" department and low average ones
-select d.name, truncate(avg(e.salary), 0) as 'avg salary'
-from employee e join department d
-using(department_id)
+select d.name, truncate(avg(e.salary), 0) as average
+from employee e join department d using(department_id)
 where department_id is not null
 group by department_id
 having round(avg(salary)) > 6000
-order by 2 desc;
+order by average desc;
 
 -- self join + group by
-select concat(m.first_name, ' ', m.last_name) as Manager, round(avg(e.salary)) as "Avg salary"
+select concat(m.first_name, ' ', m.last_name) as Manager,
+    round(avg(e.salary)) as "Avg salary"
 from employee e join employee m
 on e.manager_id = m.employee_id 
 where e.salary < 8000

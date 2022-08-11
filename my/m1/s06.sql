@@ -74,7 +74,11 @@ where hired like '2015%';
 
 select last_name, first_name, hired
 from employee
-where hired like '%-05-%';
+where hired >= '2021-05-21';
+
+select last_name, first_name, hired
+from employee
+where hired like '____-05-__';
 
 -- interval check with "between ... and ..."
 select *
@@ -89,12 +93,16 @@ where name between 'belgium' and 'china';
 -- ...
 select *
 from country
-where name between 'i' and 'j';
+where name between 'it' and 'lybia';
+
+select *
+from country
+where name like 'i%';
 
 -- "between" dates
 select last_name, first_name, hired
 from employee
-where hired between '2015-01-01' and '2015-12-31';
+where hired between '2015-01-01' and '2015-06-07';
 
 -- check if "in" a set
 select *
@@ -125,7 +133,12 @@ where commission is not null;
 -- this one works fine
 select *
 from employee
-where commission in (0.10, 0.15);
+where commission in (0.10, 0.20);
+
+select *
+from employee
+where commission = 0.10 or commission = 0.20;
+
 
 -- can't compare a 'good' value with null
 select *
@@ -136,3 +149,6 @@ where name not in (null) or name in (null);
 select *
 from region
 where name is not null or name is null;
+
+select concat(first_name, ' ', last_name) as name, salary + salary * ifnull(commission, 0) as monthly 
+from employee;

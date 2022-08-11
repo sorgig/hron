@@ -2,7 +2,7 @@
 use hron;
 
 -- Treasury is a department
-select name
+select department_id, name
 from department
 where department_id in (11, 12);
 

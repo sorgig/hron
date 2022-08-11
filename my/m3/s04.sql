@@ -19,6 +19,7 @@ select str_to_date('2021-31-12', '%Y-%d-%m');
 
 -- add an interval to date
 select date_add(curdate(), interval 7 day);
+select date_add(curdate(), interval 1 month);
 
 -- subtract an interval to date
 select date_sub(curdate(), interval 7 day);

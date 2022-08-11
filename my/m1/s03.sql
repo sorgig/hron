@@ -41,6 +41,10 @@ select first_name, last_name
 from employee
 limit 10;
 
+select concat(last_name, ' ', first_name) as name
+from employee
+limit 3;
+
 -- the second block of ten employees
 select first_name, last_name
 from employee

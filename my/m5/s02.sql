@@ -10,7 +10,7 @@ using (location_id);
 
 -- plain insert
 insert into service (service_id, name, location_id) values
-	(20, 'Mayday Shifty Solutions', 2);
+	(202, 'Mayday Shifty Solutions', 2);
 
 -- multiline insert
 insert into service (service_id, name, location_id) values

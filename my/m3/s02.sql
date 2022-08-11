@@ -2,7 +2,7 @@
 use hron;
 
 -- string concatenation
-select concat(first_name, ' ', last_name) name
+select concat(first_name, ' ', last_name) as name
 from employee;
 
 -- upper and lower case

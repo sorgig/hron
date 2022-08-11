@@ -3,12 +3,13 @@ use hron;
 
 -- check the current table status
 describe service;
+
 select s.*, l.city
 from service s left outer join location l using (location_id);
 
 -- updating a single row (if found)
 update service
-set name = right(name, 24), location_id = 3
+set name = right(name, 2), location_id = 3
 where service_id = 20;
 
 -- updating (potentially) more rows

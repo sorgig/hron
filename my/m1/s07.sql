@@ -23,7 +23,7 @@ order by salary desc
 limit 6;
 
 -- ...
-select first_name, last_name
+select first_name, last_name, salary 
 from employee
 where first_name like 'b%'
 order by salary desc;
@@ -36,4 +36,4 @@ from employee order by 1, 2;
 select first_name, last_name, hired
 from employee
 where first_name like 'c%'
-order by 3 asc;
+order by 3 desc;

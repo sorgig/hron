@@ -59,19 +59,23 @@ insert into constrained (pk, a, b, c, d, e, f, g) values (7, 1, 1, 6, 7, 6, 1, 1
 --
 --
 
+drop table other_constrained;
+
 create table other_constrained (
-	pk integer auto_increment,
+	pk integer primary key auto_increment,
     a integer,
     b integer,
-    f integer,
+    f integer not null,
     
-    primary key(pk),
+--    primary key(pk),
     constraint other_constrained_ab_uq unique(a, b),
 	foreign key (f) references car(car_id) on delete cascade
 --    constraint foreign key (f) references clients(client_id) on delete set null
 );
 
-insert into other_constrained values ();
+select * from other_constrained;
+
+insert into other_constrained (f) values (1);
 insert into other_constrained (a, b) values (1, 1);
 
 -- Error Code: 1062. Duplicate entry '1-1' for key 'other_constrained_ab_uq'

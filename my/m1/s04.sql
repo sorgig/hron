@@ -1,6 +1,10 @@
 -- examples on logical operators
 use hron;
 
+select *
+from employee
+where department_id < 3;
+
 -- use "not" if it is the other way round
 select *
 from employee

@@ -10,7 +10,7 @@ order by 1;
 -- LIKE with regular expression
 select last_name
 from employee
-where regexp_like(last_name, '^[ae]');
+where regexp_like(last_name, '^[AE]');
 
 select last_name
 from employee

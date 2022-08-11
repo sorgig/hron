@@ -1,10 +1,22 @@
 -- examples on group by - having
 use hron;
 
--- grouping by department and then by job
-select department_id, job_id
+select round(avg(salary)) sal, department_id 
 from employee
-group by department_id, job_id;
+group by department_id
+order by sal desc;
+
+-- grouping by department and then by job
+select round(avg(salary)) sal, department_id, job_id
+from employee
+group by department_id, job_id
+order by sal desc;
+
+select round(avg(salary)) sal, department_id
+from employee
+group by department_id
+order by sal desc;
+
 
 -- with a join the result set becomes more interesting
 select d.name as Department, j.title as 'Job Title'
@@ -23,7 +35,8 @@ group by department_id
 order by 2 desc;
 
 -- average salary for each department, only for most junior employees
-select d.name, round(avg(e.salary)) as 'avg salary'
+select d.name, round(avg(e.salary)) as avg  
 from employee e left outer join department d using (department_id)
 where e.hired > '2019-12-31'
-group by e.department_id;
+group by e.department_id
+order by avg desc;

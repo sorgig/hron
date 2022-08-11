@@ -3,7 +3,7 @@ use hron;
 
 -- ex 1
 -- name of department for a given employee
-select d.name
+select e.first_name, e.last_name, d.name
 from department d join employee e
 using (department_id)
 where e.employee_id = 107;
@@ -19,6 +19,12 @@ select d.name
 from department d join employee e
 on d.department_id != e.department_id
 where e.employee_id = 107 and d.manager_id is not null;
+
+-- Diana change job wants to go to Seattle
+select d.name
+from department d join employee e
+on d.department_id != e.department_id
+where e.employee_id = 107 and d.location_id = 8;
 
 -- ex 2
 -- given an employee ...
