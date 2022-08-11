@@ -1,3 +1,7 @@
+-- it should be run after the script "once"
+--
+-- java -cp h2.jar org.h2.tools.RunScript -url jdbc:h2:./hron;schema=hron -script setup.sql
+
 -- cleanup
 drop alias if exists get_salary;
 
