@@ -1,7 +1,7 @@
 -- examples on join on 3 tables
 
 -- extra info on employees - SQL/92
-select first_name, last_name, name as department, city
+select first_name, last_name, /* name as department*/ city
 from employee join department using (department_id)
 	join location using (location_id);
 
@@ -28,3 +28,7 @@ from employee e, department d, location l
 where d.department_id = e.department_id
 	and d.location_id = l.location_id
     and name = 'Executive';
+
+   select first_name, last_name, name as department, city, street_address
+from employee e join department d on d.department_id = e.department_id
+	join location l on l.location_id = d.location_id;

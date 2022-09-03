@@ -6,7 +6,7 @@ from service;
 
 -- delete a single row, if exists
 delete from service
-where service_id = 5;
+where service_id = 20;
 
 -- multiline delete - be extra careful with it!
 delete from service
@@ -16,3 +16,9 @@ where service_id > 3;
 -- !!! here another table references some of these rows !!!
 -- !!! the operation won't succeed on them !!!
 delete from service;
+
+rollback;
+
+
+
+

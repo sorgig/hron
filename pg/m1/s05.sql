@@ -2,8 +2,7 @@
 
 -- a plain select
 select *
-from employee
-where not department_id > 2;
+from employee;
 
 -- "not" is to get it the other way round
 select *

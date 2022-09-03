@@ -92,7 +92,7 @@ where region_id in (4, 2);
 -- case sensitive!
 select *
 from region
-where name in ('Europe', 'asia');
+where name in ('Europe', 'Asia');
 
 -- beware of null
 select *

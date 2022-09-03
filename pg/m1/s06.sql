@@ -3,13 +3,12 @@
 -- check null
 select employee_id, first_name, last_name, commission
 from employee
-where commission is null
-and last_name = 'King';
+where commission is null and last_name = 'King';
 
 select employee_id, first_name, last_name, commission
 from employee
 where commission is not null
-and last_name = 'King';
+	and last_name = 'King';
 
 -- !!! WRONG !!! check null
 select employee_id, first_name, last_name, commission

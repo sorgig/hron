@@ -1,4 +1,21 @@
--- examples on group by
+select d.name, round(avg(e.salary)) as "avg salary"
+from employee e join department d using (department_id)
+where hired >= '2020-01-01'
+group by d.name;
+
+-- examples on group by example of grouping
+
+select department_id, sum(salary) as sum_salary
+from employee
+group by department_id
+order by sum_salary desc;
+
+select d.name, max(e.salary) as sum_salary
+from employee e join department d
+using (department_id)
+group by d,name
+order by sum_salary desc;
+
 
 -- grouping employees by department and then by job id
 select department_id, job_id

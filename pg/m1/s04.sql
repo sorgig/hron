@@ -18,7 +18,7 @@ select distinct manager_id
 from employee;
 
 -- alias
-select title, min_salary as "min salary", min_salary as min
+select title, min_salary as "the minimum salary", min_salary as min
 from job;
 
 -- select with change on results
@@ -33,18 +33,21 @@ select region_id || ': ' || country_id as "the countries"
 from country;
 
 -- concatenation by concat()
-select concat(region_id, ': ', country_id) as "the countries"
+select concat(region_id, ': ', country_id, ' ... ',name) as "the countries"
 from country;
 
 -- limit to get result set with a specified size
 select first_name, last_name
 from employee
+order by first_name
 limit 10;
 
 select first_name, last_name
 from employee
+order by first_name
 offset 10 limit 10;
 
 select first_name, last_name
 from employee
+order by first_name
 limit 10 offset 100;

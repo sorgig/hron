@@ -28,7 +28,7 @@ from employee e right outer join department d
 using(department_id)
 where first_name like 'Ki%' or d.name like 'T%';
 
--- full join, both Kimberely and Treasury are in!
+-- full join, both Kimberely and Treasury are in! contemporaneamente left e right join
 select first_name, last_name, name
 from employee e full outer join department d 
 using(department_id)

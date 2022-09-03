@@ -5,8 +5,8 @@ select *
 from service;
 
 -- plain insert
-insert into service (service_id, name, location_id) values
-    (20, 'Mirdor Shifty Solutions', 1100);
+insert into service (name, location_id) values
+    ('Mordor Shifty Solutions', 1100);
 
 -- multiline insert
 insert into service (service_id, name, location_id) values
@@ -26,3 +26,15 @@ insert into service (name) values (DEFAULT);
 -- insert relying on column definition on table
 insert into service values
     (13, 'Rainydays Carwash', null);
+   
+   
+   
+update employee
+set salary = salary + 100
+where manager_id = (
+	select manager_id
+	from department
+	where name = 'IT');
+
+select *
+from employee;

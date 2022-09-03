@@ -16,3 +16,25 @@ where salary < 8000
 group by manager_id
 having avg(salary) > 6000
 order by avg_sal desc;
+
+
+select manager_id, round(avg(salary)) as avg_sal
+from employee
+where salary between 6000 and 8000
+group by manager_id
+order by avg_sal desc;
+
+
+select concat(first_name, ' ', last_name)
+from employee
+where department_id in (
+	select department_id
+	from department
+	where name = 'IT');
+
+
+
+
+
+
+

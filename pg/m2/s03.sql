@@ -7,7 +7,7 @@ using (region_id)
 order by 1, 2;
 
 -- join-on, more flexible
-select r.name region, c.name country
+select r.name as region, c.name as country
 from region r join country c
 on r.region_id = c.region_id
 order by 1, 2;
